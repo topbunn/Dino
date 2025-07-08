@@ -1,6 +1,5 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.splash
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -37,43 +35,40 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography.APP_TEXT
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ProgressBar
 
-class SplashScreen: Screen {
+object SplashScreen: Screen {
 
 
     @Composable
     override fun Content() {
-        TODO("Not yet implemented")
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Colors.BLACK_BG),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                text = stringResource(R.string.app_name),
+                style = APP_TEXT,
+                fontSize = 32.sp,
+                fontFamily = Fonts.SF.BOLD,
+                textAlign = TextAlign.Center
+            )
+            Spacer(Modifier.height(30.dp))
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(ru.topbun.domain.R.drawable.splash_preview),
+                contentDescription = "Image preview",
+                contentScale = ContentScale.FillWidth
+            )
+            Spacer(Modifier.height(50.dp))
+            ProgressBar()
+        }
     }
 
-
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Colors.BLACK_BG),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            text = stringResource(R.string.app_named),
-            style = APP_TEXT,
-            fontSize = 32.sp,
-            fontFamily = Fonts.SF.BOLD,
-            textAlign = TextAlign.Center
-        )
-        Spacer(Modifier.height(30.dp))
-        Image(
-            modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(R.drawable.splash_preview),
-            contentDescription = "Image preview",
-            contentScale = ContentScale.FillWidth
-        )
-        Spacer(Modifier.height(50.dp))
+    @Composable
+    fun ProgressBar() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,13 +76,11 @@ private fun Preview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val context = LocalContext.current
-            var progress by rememberSaveable { mutableStateOf(0f) }
+            var progress by rememberSaveable { mutableFloatStateOf(0f) }
             LaunchedEffect(Unit) {
-                if (progress < 100){
+                while (progress < 1){
                     progress += 0.001f
-                    delay(10)
-                } else {
-                    Toast.makeText(context, "Загрузка зверешена.", Toast.LENGTH_SHORT).show()
+                    delay(5)
                 }
             }
             ProgressBar(
@@ -100,7 +93,7 @@ private fun Preview() {
             Spacer(Modifier.height(10.dp))
             Text(
                 modifier = Modifier.padding(horizontal = 20.dp),
-                text = progress.toInt().toString() + "%",
+                text = (progress * 100).toInt().toString() + "%",
                 style = APP_TEXT,
                 fontSize = 14.sp,
                 fontFamily = Fonts.SF.MEDIUM,
@@ -108,5 +101,7 @@ private fun Preview() {
             )
         }
     }
+
+
 }
 

@@ -1,13 +1,11 @@
 package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +21,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
@@ -36,80 +33,60 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
-    iconButton: (@Composable () -> Unit)? = null,
+    iconStart: (@Composable () -> Unit)? = null,
     padding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 16.dp),
     enabled: Boolean = true,
-    errorText: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     singleLine: Boolean = true,
-    borderWidth: Dp = 1.dp,
     textAlignment: Alignment = Alignment.CenterStart,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
 ) {
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    borderWidth,
-                    Colors.GRAY.takeIf { errorText.isNullOrEmpty() } ?: Colors.RED,
-                    RoundedCornerShape(8.dp)
-                ),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Box(
-                modifier = modifier
-                    .weight(1f)
-                    .padding(padding),
-                contentAlignment = textAlignment
-            ){
-                if (value.isEmpty()){
-                    Text(
-                        text = placeholder,
-                        style = APP_TEXT,
-                        fontSize = 15.sp,
-                        fontFamily = Fonts.SF.MEDIUM,
-                        color = Colors.GRAY
-                    )
-                }
-                val textStyle = TextStyle(
-                    color = Colors.BLACK,
-                    fontSize = 15.sp,
-                    fontFamily = Fonts.SF.MEDIUM
-                )
-                BasicTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = value,
-                    onValueChange = onValueChange,
-                    enabled = enabled,
-                    textStyle = textStyle,
-                    keyboardOptions = keyboardOptions,
-                    keyboardActions = keyboardActions,
-                    singleLine = singleLine,
-                    maxLines = maxLines,
-                    minLines = minLines,
-                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                    visualTransformation = visualTransformation
-                )
-
-            }
-            iconButton?.let {
-                it()
-                Spacer(modifier = Modifier.width(16.dp))
-            }
+    Row(
+        modifier = modifier.background(Colors.GRAY_BG, RoundedCornerShape(6.dp)),
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        iconStart?.let {
+            Spacer(modifier = Modifier.width(12.dp))
+            it()
         }
-        errorText?.let {
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = it,
-                fontSize = 13.sp,
-                fontFamily = Fonts.SF.SEMI_BOLD,
-                color = Colors.RED
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(padding),
+            contentAlignment = textAlignment
+        ){
+            if (value.isEmpty()){
+                Text(
+                    text = placeholder,
+                    style = APP_TEXT,
+                    fontSize = 16.sp,
+                    fontFamily = Fonts.SF.MEDIUM,
+                    color = Colors.GRAY.copy(0.7f)
+                )
+            }
+            val textStyle = TextStyle(
+                color = Colors.GRAY,
+                fontSize = 16.sp,
+                fontFamily = Fonts.SF.MEDIUM
             )
+            BasicTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = value,
+                onValueChange = onValueChange,
+                enabled = enabled,
+                textStyle = textStyle,
+                keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
+                singleLine = singleLine,
+                maxLines = maxLines,
+                minLines = minLines,
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                visualTransformation = visualTransformation
+            )
+
         }
     }
-
 }

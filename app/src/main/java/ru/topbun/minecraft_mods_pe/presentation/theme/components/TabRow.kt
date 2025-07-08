@@ -36,20 +36,15 @@ fun TabRow(
     onChangeSelectedIndex: (Int) -> Unit
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(36.dp)
-            .background(Color(0xffF3F3F3), RoundedCornerShape(8.dp))
-            .padding(2.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp)
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items.forEachIndexed { index, item ->
-            val background = if (selectedIndex == index) MaterialTheme.colorScheme.primary else Color.Transparent
-            val textColor = if (selectedIndex == index) Colors.WHITE else Colors.GREEN
+            val background = if (selectedIndex == index) Colors.GREEN_BG else Colors.GRAY_BG
+            val textColor = if (selectedIndex == index) Colors.GREEN else Colors.GRAY
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight()
                     .clip(RoundedCornerShape(6.dp))
                     .background(color = background)
                     .clickable(
@@ -61,7 +56,7 @@ fun TabRow(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    modifier = Modifier.padding(horizontal = 10.dp),
+                    modifier = Modifier.padding(vertical = 7.dp),
                     text = item,
                     style = Typography.APP_TEXT,
                     fontSize = 15.sp,

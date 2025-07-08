@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">Minecraft Mods PE</string>
-    <string name="app_named">TNT Моды для Майнкрафта</string>
+    <string name="app_name">TNT Mods for Minecraft</string>
+
+    <string name="search">Search</string>
+
+    <string name="sort_enum_best">Best</string>
+    <string name="sort_enum_new">New</string>
+    <string name="sort_enum_all">All</string>
+
+    <string name="type">Type</string>
+
+    <string name="sort_type_enum_all">All</string>
+    <string name="sort_type_enum_maps">Maps</string>
+    <string name="sort_type_enum_addon">Mods</string>
+    <string name="sort_type_enum_skins">Skins</string>
 </resources>

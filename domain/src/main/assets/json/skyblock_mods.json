@@ -1,0 +1,98 @@
+[
+  {
+    "id": 0,
+    "title": "Insomnia SkyBlock",
+    "description": "There are many maps with skyblock modes, but only a few that are really high-quality and interesting. That is why we decided to publish the assembly of The Insomnia Skyblock. The add-on has many interesting features and will be interesting even to those who have never tried the floating islands mode. The map includes its own add-on with armor, tools, weapons and systems to simplify the gameplay. You can play here without installing additional assemblies, but the author highly recommends downloading them. Most of the functions work with the help of mods.",
+    "previewRes": 2130968604,
+    "countDownload": 31154,
+    "countFavorite": 2949,
+    "tag": "SKYBLOCK",
+    "type": [
+      "ADDON",
+      "MAPS",
+      "TEXTURE"
+    ],
+    "supportVersion": [
+      "1.21", "1.20", "1.19", "1.18", "1.17", "1.16"
+    ],
+    "files": [
+      "files/insomnia_skyblock_map.mcworld",
+      "files/insomnia_skyblock_mod.mcpack",
+      "files/insomnia_skyblock_texture.mcpack"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Lucky SkyBlock",
+    "description": "Lucky Skyblock map for Minecraft Bedrock belongs to a series of quite popular survival maps called SkyBlock. The distinctive feature of this one is the presence of unpredictability of events, which makes the game more interesting and unique. It is because of this that you can get a very easy or very difficult level. Everything will depend only on your luck!",
+    "previewRes": 2130968605,
+    "countDownload": 7196,
+    "countFavorite": 2402,
+    "tag": "SKYBLOCK",
+    "type": [
+      "MAPS"
+    ],
+    "supportVersion": [
+      "1.21", "1.20", "1.19", "1.18", "1.17", "1.16"
+    ],
+    "files": [
+      "files/lucky_skyblock_map.mcworld"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "One Block",
+    "description": "The classic One Block Minecraft 1.21+ map will give you life on one block in the vastness of the block universe. There are many items and blocks that will help you survive: special chests, barrels, a level system and much more. The author worked on this build for 6 months. As a result, we got 13 levels at once that need to be mastered. As always, you need to break 1 block to get random items. Every 200 blocks, your level will increase, and you will get a barrel with valuable items.",
+    "previewRes": 2130968606,
+    "countDownload": 31213,
+    "countFavorite": 4169,
+    "tag": "SKYBLOCK",
+    "type": [
+      "MAPS"
+    ],
+    "supportVersion": [
+      "1.21", "1.20", "1.19", "1.18", "1.17", "1.16"
+    ],
+    "files": [
+      "files/one_block_map.mcworld"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Random SkyBlock",
+    "description": "For those looking for a new challenge in MCPE, a great choice is the Random SkyBlock map, which contains a SkyBlock mode with a dynamic mechanic of changing the island every 10 minutes. With over 100 island variations, you can end up on a platform with resources, and a moment later - on lava or obsidian. This makes the game more intense and requires a strategic approach. Should you collect materials as quickly as possible or take a risk and wait to see if the next island has resources? Decisions will have to be made very quickly.",
+    "previewRes": 2130968607,
+    "countDownload": 28838,
+    "countFavorite": 2430,
+    "tag": "SKYBLOCK",
+    "type": [
+      "ADDON"
+    ],
+    "supportVersion": [
+      "1.21", "1.20", "1.19", "1.18", "1.17", "1.16"
+    ],
+    "files": [
+      "files/random_skyblock_mod.mcworld"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "SERP Lucky Blocks",
+    "description": "SERP Lucky Blocks are an integral part of Minecraft Bedrock that all newbies should get to know. Everything is about luck: vendors, baskets, and of course, the blocks themselves. When you destroy these blocks, anything can happen. It all depends on your luck.\n",
+    "previewRes": 2130968608,
+    "countDownload": 47125,
+    "countFavorite": 2633,
+    "tag": "SKYBLOCK",
+    "type": [
+      "ADDON",
+      "MAPS"
+    ],
+    "supportVersion": [
+      "1.21", "1.20", "1.19", "1.18", "1.17", "1.16"
+    ],
+    "files": [
+      "files/serp_mod.mcpack",
+      "files/serp_texture.mcpack"
+    ]
+  }
+]
