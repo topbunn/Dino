@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.MaterialTheme
+import cafe.adriel.voyager.navigator.Navigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
+import ru.topbun.minecraft_mods_pe.presentation.screens.main.MainScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.colorScheme
 
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
             MaterialTheme(colorScheme) {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setStatusBarColor(Colors.BLACK_BG, false)
-                FavoriteScreen.Content()
+                Navigator(MainScreen)
             }
         }
     }

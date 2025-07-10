@@ -18,7 +18,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 @Composable
 fun IconWithButton(value: String, icon: Int) {
     Row(
-        verticalAlignment = Alignment.Bottom,
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Icon(

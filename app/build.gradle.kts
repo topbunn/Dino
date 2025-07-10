@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     id("kotlin-parcelize")
+    id("androidx.room")
 }
 
 android {
@@ -40,12 +41,21 @@ android {
     buildFeatures {
         compose = true
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
 
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.kotlinx.serialization.json)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     // Voyager
     implementation(libs.voyager.navigator)

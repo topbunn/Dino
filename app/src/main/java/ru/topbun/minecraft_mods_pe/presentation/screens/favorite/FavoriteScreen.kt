@@ -16,26 +16,30 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import ru.topbun.domain.R
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
-import ru.topbun.minecraft_mods_pe.repository.ModRepository
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 
 object FavoriteScreen : Screen {
 
     @Composable
     override fun Content() {
-        val repository = ModRepository(LocalContext.current)
-        val mods = repository.getMods()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -44,7 +48,9 @@ object FavoriteScreen : Screen {
                 .background(Colors.BLACK_BG)
 
         ) {
-            Header()
+            val viewModel = viewModel<FavoriteViewModel>()
+            val state by viewModel.state.collectAsState()
+            Header(state)
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,8 +58,22 @@ object FavoriteScreen : Screen {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(20.dp)
             ) {
-                items(items = mods, key = {it.id}){
-                    ModItem(it)
+                if (state.mods.isNotEmpty()){
+                    items(items = state.mods, key = {it.id}){
+                        ModItem(it){ viewModel.removeFavorite(it) }
+                    }
+                } else {
+                    item {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "The list is empty :(",
+                            style = Typography.APP_TEXT,
+                            fontSize = 18.sp,
+                            color = Colors.GRAY,
+                            textAlign = TextAlign.Center,
+                            fontFamily = Fonts.SF.BOLD,
+                        )
+                    }
                 }
             }
         }
@@ -62,7 +82,8 @@ object FavoriteScreen : Screen {
 }
 
 @Composable
-private fun Header() {
+private fun Header(state: FavoriteState) {
+    val navigator = LocalNavigator.currentOrThrow
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,13 +93,17 @@ private fun Header() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.height(20.dp),
+            modifier = Modifier
+                .height(20.dp)
+                .noRippleClickable {
+                    navigator.pop()
+                },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = "button back",
             tint = Colors.GREEN
         )
         Text(
-            text = "Избранное (5)",
+            text = stringResource(ru.topbun.minecraft_mods_pe.R.string.favorite, state.mods.count()),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.GRAY,
