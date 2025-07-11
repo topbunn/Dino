@@ -33,6 +33,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
+    alignment: Alignment.Vertical = Alignment.CenterVertically,
     iconStart: (@Composable () -> Unit)? = null,
     padding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 16.dp),
     enabled: Boolean = true,
@@ -46,7 +47,7 @@ fun AppTextField(
 ) {
     Row(
         modifier = modifier.background(Colors.GRAY_BG, RoundedCornerShape(6.dp)),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = alignment
     ){
         iconStart?.let {
             Spacer(modifier = Modifier.width(12.dp))

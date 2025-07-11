@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -31,10 +29,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 import ru.topbun.domain.R
+import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScreen
 import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
@@ -45,7 +45,10 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.TabRow
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 
-object MainScreen: Screen {
+object MainScreen: Tab {
+
+    override val options: TabOptions
+    @Composable get() = TabOptions(0U, stringResource(ru.topbun.minecraft_mods_pe.R.string.tabs_main), painterResource(ru.topbun.domain.R.drawable.ic_tabs_main))
 
     @Composable
     override fun Content() {
@@ -53,10 +56,9 @@ object MainScreen: Screen {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Colors.BLACK_BG)
-                .statusBarsPadding()
-                .navigationBarsPadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp)
         ) {
+            val parentNavigator = LocalNavigator.currentOrThrow.parent
             val viewModel = viewModel<MainViewModel>()
             val state by viewModel.state.collectAsState()
             val mods by viewModel.mods.collectAsState()
@@ -71,7 +73,11 @@ object MainScreen: Screen {
             ) {
                 if (mods.isNotEmpty()){
                     items(items = mods){
-                        ModItem(it){viewModel.changeFavorite(it)}
+                        ModItem(
+                            mod = it,
+                            onClickFavorite = { viewModel.changeFavorite(it) },
+                            onClickMod = { parentNavigator?.push(DetailModScreen(it)) }
+                        )
                     }
                 } else {
                     item {

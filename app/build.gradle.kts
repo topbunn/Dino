@@ -59,6 +59,7 @@ dependencies {
 
     // Voyager
     implementation(libs.voyager.navigator)
+    implementation(libs.voyager.tab)
     implementation(libs.voyager.transitions)
 
     implementation(libs.androidx.core.ktx)

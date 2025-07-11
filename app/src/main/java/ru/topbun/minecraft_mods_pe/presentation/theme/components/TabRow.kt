@@ -41,7 +41,7 @@ fun TabRow(
     ) {
         items.forEachIndexed { index, item ->
             val background = if (selectedIndex == index) Colors.GREEN_BG else Colors.GRAY_BG
-            val textColor = if (selectedIndex == index) Colors.GREEN else Colors.GRAY
+            val textColor = if (selectedIndex == index) Color(0xff4AD858) else Colors.GRAY
             Box(
                 modifier = Modifier
                     .weight(1f)

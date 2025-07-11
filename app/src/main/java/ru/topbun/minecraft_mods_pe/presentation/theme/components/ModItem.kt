@@ -2,6 +2,7 @@ package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,9 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,20 +28,23 @@ import ru.topbun.domain.entity.ModEntity
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
+import ru.topbun.minecraft_mods_pe.utills.getImageWithNameFile
 
 @Composable
-fun ModItem(mod: ModEntity, onClickFavorite: () -> Unit) {
+fun ModItem(mod: ModEntity, onClickFavorite: () -> Unit, onClickMod: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Colors.GRAY_BG, RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(8.dp))
+            .background(Colors.GRAY_BG)
+            .clickable { onClickMod() }
             .padding(10.dp),
     ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(6.dp)),
-            painter = painterResource(mod.previewRes),
+            painter = painterResource(getImageWithNameFile(mod.previewRes)),
             contentDescription = "image mod",
             contentScale = ContentScale.FillWidth
         )

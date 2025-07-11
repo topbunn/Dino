@@ -28,8 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.delay
 import ru.topbun.minecraft_mods_pe.R
+import ru.topbun.minecraft_mods_pe.presentation.screens.tabs.TabsScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography.APP_TEXT
@@ -55,13 +58,13 @@ object SplashScreen: Screen {
                 fontFamily = Fonts.SF.BOLD,
                 textAlign = TextAlign.Center
             )
-            Spacer(Modifier.height(30.dp))
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(ru.topbun.domain.R.drawable.splash_preview),
-                contentDescription = "Image preview",
-                contentScale = ContentScale.FillWidth
-            )
+//            Spacer(Modifier.height(30.dp))
+//            Image(
+//                modifier = Modifier.fillMaxWidth(),
+//                painter = painterResource(ru.topbun.domain.R.drawable.splash_preview),
+//                contentDescription = "Image preview",
+//                contentScale = ContentScale.FillWidth
+//            )
             Spacer(Modifier.height(50.dp))
             ProgressBar()
         }
@@ -75,13 +78,14 @@ object SplashScreen: Screen {
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val context = LocalContext.current
+            val navigator = LocalNavigator.currentOrThrow
             var progress by rememberSaveable { mutableFloatStateOf(0f) }
             LaunchedEffect(Unit) {
                 while (progress < 1){
                     progress += 0.001f
-                    delay(5)
+                    delay(3)
                 }
+                navigator.push(TabsScreen)
             }
             ProgressBar(
                 progress = progress,

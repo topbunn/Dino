@@ -29,7 +29,7 @@ fun AppButton(
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
-            disabledContainerColor = containerColor.copy(0.65f)
+            disabledContainerColor = containerColor.copy(0.5f)
         ),
         enabled = enabled || loading,
         shape = RoundedCornerShape(8.dp),

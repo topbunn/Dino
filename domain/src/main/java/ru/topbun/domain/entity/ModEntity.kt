@@ -7,7 +7,7 @@ data class ModEntity(
     val id: Int,
     val title: String,
     val description: String,
-    val previewRes: Int,
+    val previewRes: String,
     val isFavorite: Boolean = false,
     val countDownload: Int,
     val countFavorite: Int,
