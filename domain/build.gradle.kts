@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
     id("androidx.room")
+    id("kotlin-parcelize")
 }
 
 android {

@@ -22,8 +22,8 @@ fun DialogWrapper(
     modifier: Modifier = Modifier
         .heightIn(max = 700.dp)
         .padding(horizontal = 20.dp)
-        .background(color = Colors.WHITE, RoundedCornerShape(16.dp))
-        .padding(horizontal = 12.dp, vertical = 20.dp)
+        .background(color = Colors.GRAY_BG, RoundedCornerShape(8.dp))
+        .padding(horizontal = 16.dp, vertical = 20.dp)
         .clipToBounds(),
     content: @Composable ColumnScope.() -> Unit
 ) {

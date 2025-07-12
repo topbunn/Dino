@@ -38,7 +38,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppTextField
 object FeedbackScreen: Tab {
 
     override val options: TabOptions
-        @Composable get() = TabOptions(2U, stringResource(R.string.tabs_feedback), painterResource(ru.topbun.domain.R.drawable.ic_tabs_feedback))
+        @Composable get() = TabOptions(2U, stringResource(ru.topbun.domain.R.string.tabs_feedback), painterResource(ru.topbun.domain.R.drawable.ic_tabs_feedback))
 
     @Composable
     override fun Content() {
@@ -50,7 +50,7 @@ object FeedbackScreen: Tab {
                 .padding(horizontal = 20.dp, vertical = 50.dp)
         ) {
             val context = LocalContext.current
-            val messageSent = stringResource(R.string.message_is_sent)
+            val messageSent = stringResource(ru.topbun.domain.R.string.message_is_sent)
             var name by rememberSaveable{ mutableStateOf("") }
             var email by rememberSaveable{ mutableStateOf("") }
             var message by rememberSaveable{ mutableStateOf("") }
@@ -59,7 +59,7 @@ object FeedbackScreen: Tab {
             }
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.contact_us),
+                text = stringResource(ru.topbun.domain.R.string.contact_us),
                 style = Typography.APP_TEXT,
                 fontSize = 28.sp,
                 color = Colors.GRAY,
@@ -69,7 +69,7 @@ object FeedbackScreen: Tab {
             Spacer(Modifier.height(50.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.any_question),
+                text = stringResource(ru.topbun.domain.R.string.any_question),
                 style = Typography.APP_TEXT,
                 fontSize = 24.sp,
                 color = Colors.GRAY,
@@ -79,13 +79,13 @@ object FeedbackScreen: Tab {
             Spacer(Modifier.height(30.dp))
             AppTextField(
                 value = name,
-                placeholder = stringResource(R.string.name),
+                placeholder = stringResource(ru.topbun.domain.R.string.name),
                 onValueChange = {name = it}
             )
             Spacer(Modifier.height(10.dp))
             AppTextField(
                 value = email,
-                placeholder = stringResource(R.string.email),
+                placeholder = stringResource(ru.topbun.domain.R.string.email),
                 onValueChange = {email = it}
             )
             Spacer(Modifier.height(10.dp))
@@ -96,7 +96,7 @@ object FeedbackScreen: Tab {
                 alignment = Alignment.Top,
                 singleLine = false,
                 value = message,
-                placeholder = stringResource(R.string.type_message),
+                placeholder = stringResource(ru.topbun.domain.R.string.type_message),
                 onValueChange = {message = it}
             )
             Spacer(Modifier.height(20.dp))
@@ -105,7 +105,7 @@ object FeedbackScreen: Tab {
                     .fillMaxWidth()
                     .height(48.dp),
                 enabled = buttonEnabled,
-                text = "Send"
+                text = stringResource(ru.topbun.domain.R.string.send)
             ) {
                 name = ""
                 email = ""

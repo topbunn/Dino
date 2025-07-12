@@ -112,8 +112,8 @@ private fun Header(type: InstructionType) {
             tint = Colors.GREEN
         )
         val titleRes = when(type){
-            ADDON -> ru.topbun.minecraft_mods_pe.R.string.installing_addons_and_textures
-            WORLD -> ru.topbun.minecraft_mods_pe.R.string.installation_of_worlds
+            ADDON -> ru.topbun.domain.R.string.installing_addons_and_textures
+            WORLD -> ru.topbun.domain.R.string.installation_of_worlds
         }
         Text(
             text = stringResource(titleRes),

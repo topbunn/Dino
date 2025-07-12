@@ -1,12 +1,10 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.main
 
-import ru.topbun.minecraft_mods_pe.R
-
 enum class ModSortEnum(val textRes: Int) {
 
-    BEST(R.string.sort_enum_best),
-    NEW(R.string.sort_enum_new),
-    ALL(R.string.sort_enum_all)
+    BEST(ru.topbun.domain.R.string.sort_enum_best),
+    NEW(ru.topbun.domain.R.string.sort_enum_new),
+    ALL(ru.topbun.domain.R.string.sort_enum_all)
 
 
 }

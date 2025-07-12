@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
 
-
 fun installMod(context: Context, file: File) {
     val uri = FileProvider.getUriForFile(
         context,
@@ -24,6 +23,6 @@ fun installMod(context: Context, file: File) {
     try {
         context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        Toast.makeText(context, "Minecraft не установлен", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(ru.topbun.domain.R.string.minecraft_is_not_installed), Toast.LENGTH_LONG).show()
     }
 }

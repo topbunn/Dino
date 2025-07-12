@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -41,12 +42,13 @@ fun AppTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     singleLine: Boolean = true,
+    background: Color = Colors.GRAY_BG,
     textAlignment: Alignment = Alignment.CenterStart,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
 ) {
     Row(
-        modifier = modifier.background(Colors.GRAY_BG, RoundedCornerShape(6.dp)),
+        modifier = modifier.background(background, RoundedCornerShape(6.dp)),
         verticalAlignment = alignment
     ){
         iconStart?.let {

@@ -1,9 +1,9 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.detailMod
 
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -16,32 +16,32 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.parcelize.Parcelize
 import ru.topbun.domain.R
 import ru.topbun.domain.entity.ModEntity
-import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
 import ru.topbun.minecraft_mods_pe.presentation.screens.instruction.InstructionScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
@@ -51,10 +51,15 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.IconWithButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 import ru.topbun.minecraft_mods_pe.utills.getImageWithNameFile
 
-data class DetailModScreen(private val mod: ModEntity): Screen {
+@Parcelize
+data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val context = LocalContext.current
+        val viewModel = remember { DetailModViewModel(context, mod) }
+        val state by viewModel.state.collectAsState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,34 +68,66 @@ data class DetailModScreen(private val mod: ModEntity): Screen {
                 .statusBarsPadding()
                 .background(Colors.BLACK_BG)
         ) {
-            val navigator = LocalNavigator.currentOrThrow
-            Header()
+            Header(viewModel, state)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 20.dp, vertical = 10.dp)
-            ){
+                    .padding(horizontal = 20.dp, vertical = 20.dp)
+            ) {
                 ButtonInstruction(navigator)
                 Spacer(Modifier.height(10.dp))
-                Preview(mod)
+                Preview(state.mod)
                 Spacer(Modifier.height(20.dp))
-                TitleWithDescr(mod)
+                TitleWithDescr(state.mod)
                 Spacer(Modifier.height(10.dp))
-                Metrics(mod)
+                Metrics(state.mod)
                 Spacer(Modifier.height(20.dp))
-                SupportVersions(mod)
+                SupportVersions(state.mod)
                 Spacer(Modifier.height(20.dp))
-                Column(
-
-                ) {
-
-                }
+                FileButtons(viewModel, state)
             }
         }
+        state.choiceFilePathSetup?.let {
+            SetupModDialog(it) {
+                viewModel.changeStageSetupMod(null)
+            }
+        }
+        if (state.dontWorkAddonDialogIsOpen){
+            DontWorkAddonDialog { viewModel.openDontWorkDialog(false) }
+        }
     }
+}
 
+@Composable
+private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        state.mod.files.forEach {
+            AppButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                text = it,
+                contentColor = Color(0xff4AD858),
+                containerColor = Colors.GREEN_BG,
+            ) {
+                viewModel.changeStageSetupMod(it)
+            }
+        }
+        AppButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp),
+            text = stringResource(ru.topbun.domain.R.string.addon_don_t_work),
+            contentColor = Colors.WHITE,
+            containerColor = Color(0xffE03131),
+        ) {
+            viewModel.openDontWorkDialog(true)
+        }
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -100,7 +137,7 @@ private fun SupportVersions(mod: ModEntity) {
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
-            text = stringResource(ru.topbun.minecraft_mods_pe.R.string.supported_versions),
+            text = stringResource(ru.topbun.domain.R.string.supported_versions),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.WHITE,
@@ -173,7 +210,7 @@ private fun Preview(mod: ModEntity) {
 @Composable
 private fun ButtonInstruction(navigator: Navigator) {
     AppButton(
-        text = stringResource(ru.topbun.minecraft_mods_pe.R.string.instructions),
+        text = stringResource(ru.topbun.domain.R.string.instructions),
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
@@ -183,7 +220,7 @@ private fun ButtonInstruction(navigator: Navigator) {
 }
 
 @Composable
-private fun Header() {
+private fun Header(viewModel: DetailModViewModel, state: DetailModState) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -202,7 +239,7 @@ private fun Header() {
             tint = Colors.GREEN
         )
         Text(
-            text = stringResource(ru.topbun.minecraft_mods_pe.R.string.installation),
+            text = stringResource(ru.topbun.domain.R.string.installation),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.GRAY,
@@ -211,8 +248,10 @@ private fun Header() {
         Image(
             modifier = Modifier
                 .size(24.dp)
-                .noRippleClickable { },
-            painter = painterResource(R.drawable.ic_mine_heart_filled),
+                .noRippleClickable { viewModel.changeFavorite() },
+            painter = painterResource(
+                if (state.mod.isFavorite) R.drawable.ic_mine_heart_filled else R.drawable.ic_mine_heart_stroke
+            ),
             contentDescription = "favorite mods",
         )
     }

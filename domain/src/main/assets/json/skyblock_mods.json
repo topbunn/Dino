@@ -21,9 +21,9 @@
       "1.16"
     ],
     "files": [
-      "files/insomnia_skyblock_map.mcworld",
-      "files/insomnia_skyblock_mod.mcpack",
-      "files/insomnia_skyblock_texture.mcpack"
+      "insomnia_skyblock_map.mcworld",
+      "insomnia_skyblock_mod.mcpack",
+      "insomnia_skyblock_texture.mcpack"
     ]
   },
   {
@@ -46,7 +46,7 @@
       "1.16"
     ],
     "files": [
-      "files/lucky_skyblock_map.mcworld"
+      "lucky_skyblock_map.mcworld"
     ]
   },
   {
@@ -69,7 +69,7 @@
       "1.16"
     ],
     "files": [
-      "files/one_block_map.mcworld"
+      "one_block_map.mcworld"
     ]
   },
   {
@@ -92,7 +92,7 @@
       "1.16"
     ],
     "files": [
-      "files/random_skyblock_mod.mcworld"
+      "random_skyblock_mod.mcworld"
     ]
   },
   {
@@ -116,8 +116,8 @@
       "1.16"
     ],
     "files": [
-      "files/serp_mod.mcpack",
-      "files/serp_texture.mcpack"
+      "serp_mod.mcpack",
+      "serp_texture.mcpack"
     ]
   }
 ]

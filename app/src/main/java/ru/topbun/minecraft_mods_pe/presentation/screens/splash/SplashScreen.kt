@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -46,25 +45,25 @@ object SplashScreen: Screen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Colors.BLACK_BG),
+                .background(Colors.BLACK_BG)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                text = stringResource(R.string.app_name),
+                text = stringResource(ru.topbun.domain.R.string.app_name),
                 style = APP_TEXT,
                 fontSize = 32.sp,
                 fontFamily = Fonts.SF.BOLD,
                 textAlign = TextAlign.Center
             )
-//            Spacer(Modifier.height(30.dp))
-//            Image(
-//                modifier = Modifier.fillMaxWidth(),
-//                painter = painterResource(ru.topbun.domain.R.drawable.splash_preview),
-//                contentDescription = "Image preview",
-//                contentScale = ContentScale.FillWidth
-//            )
+            Spacer(Modifier.height(30.dp))
+            Image(
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+                painter = painterResource(R.drawable.logo),
+                contentDescription = "Image preview",
+                contentScale = ContentScale.FillWidth
+            )
             Spacer(Modifier.height(50.dp))
             ProgressBar()
         }
@@ -83,7 +82,7 @@ object SplashScreen: Screen {
             LaunchedEffect(Unit) {
                 while (progress < 1){
                     progress += 0.001f
-                    delay(3)
+                    delay(2)
                 }
                 navigator.push(TabsScreen)
             }

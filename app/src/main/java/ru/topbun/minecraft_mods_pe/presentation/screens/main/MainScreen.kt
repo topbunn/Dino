@@ -48,7 +48,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickab
 object MainScreen: Tab {
 
     override val options: TabOptions
-    @Composable get() = TabOptions(0U, stringResource(ru.topbun.minecraft_mods_pe.R.string.tabs_main), painterResource(ru.topbun.domain.R.drawable.ic_tabs_main))
+    @Composable get() = TabOptions(0U, stringResource(ru.topbun.domain.R.string.tabs_main), painterResource(ru.topbun.domain.R.drawable.ic_tabs_main))
 
     @Composable
     override fun Content() {
@@ -142,7 +142,7 @@ private fun TopBar(viewModel: MainViewModel, state: MainState) {
         AppTextField(
             modifier = Modifier.weight(1f),
             value = state.search,
-            placeholder = stringResource(ru.topbun.minecraft_mods_pe.R.string.search),
+            placeholder = stringResource(ru.topbun.domain.R.string.search),
             onValueChange = { viewModel.changeSearch(it) },
             iconStart = {
                 Icon(

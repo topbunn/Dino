@@ -119,7 +119,7 @@ private fun Header() {
             tint = Colors.GREEN
         )
         Text(
-            text = stringResource(ru.topbun.minecraft_mods_pe.R.string.instructions),
+            text = stringResource(ru.topbun.domain.R.string.instructions),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.GRAY,

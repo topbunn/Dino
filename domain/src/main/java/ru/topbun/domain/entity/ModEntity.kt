@@ -1,8 +1,11 @@
 package ru.topbun.domain.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class ModEntity(
     val id: Int,
     val title: String,
@@ -15,4 +18,4 @@ data class ModEntity(
     val type: List<ModType>,
     val supportVersion: List<String>,
     val files: List<String>,
-)
+): Parcelable

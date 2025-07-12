@@ -13,7 +13,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "ru.topbun.minecraft_mods_pe"
+        applicationId = "com.youlovehamit.survival"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

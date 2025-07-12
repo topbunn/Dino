@@ -7,9 +7,18 @@ import java.io.FileOutputStream
 
 fun Context.getStringFromFileAssets(path: String) = assets.open(path).bufferedReader().use { it.readText() }
 
+fun getModFile(fileName: String): File? {
+    val downloadsDir = File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+        "mods"
+    )
+    val targetFile = File(downloadsDir, fileName)
+    return if (targetFile.exists() && targetFile.isFile) targetFile else null
+}
+
 fun copyAssetToDownloads(context: Context, assetFileName: String): File? {
     return try {
-        val inputStream = context.assets.open("mods/$assetFileName")
+        val inputStream = context.assets.open("files/$assetFileName")
         val downloadsDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "mods")
         if (!downloadsDir.exists()) downloadsDir.mkdirs()
 

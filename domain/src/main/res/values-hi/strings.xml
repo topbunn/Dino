@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MCPE के लिए SkyBlock मोड</string>
+
+    <string name="search">खोजें</string>
+
+    <string name="sort_enum_best">सर्वश्रेष्ठ</string>
+    <string name="sort_enum_new">नए</string>
+    <string name="sort_enum_all">सभी</string>
+
+    <string name="type">प्रकार</string>
+
+    <string name="sort_type_enum_all">सभी</string>
+    <string name="sort_type_enum_maps">मैप्स</string>
+    <string name="sort_type_enum_addon">मोड्स</string>
+    <string name="sort_type_enum_texture">टेक्सचर</string>
+    <string name="sort_type_enum_skins">स्किन्स</string>
+
+    <string name="favorite">पसंदीदा (%1$s)</string>
+
+    <string name="tabs_main">मुखपृष्ठ</string>
+    <string name="tabs_favorite">पसंदीदा</string>
+    <string name="tabs_feedback">प्रतिपुष्टि</string>
+
+    <string name="contact_us">संपर्क करें</string>
+    <string name="any_question">कोई प्रश्न या सुझाव?</string>
+
+    <string name="name">नाम</string>
+    <string name="email">ईमेल</string>
+    <string name="type_message">अपना संदेश लिखें…</string>
+    <string name="message_is_sent">संदेश भेजा गया</string>
+
+    <string name="installation">इंस्टॉलेशन</string>
+    <string name="instructions">निर्देश</string>
+
+    <string name="instr_addon_1">कुछ ऐडऑन .mcpack या .mcworld फाइलों के रूप में आते हैं। इंस्टॉल करने के लिए इच्छित फ़ाइल पर टैप करें। आप इसे मैन्युअली भी अपने डिवाइस पर डाउनलोड कर सकते हैं।</string>
+    <string name="instr_addon_2">अपने वर्ल्ड को एडिट मोड में खोलें।</string>
+    <string name="instr_addon_3">रिसोर्स पैक चुनें। डाउनलोड किए गए ऐडऑन या टेक्सचर को सक्रिय करने के लिए सक्रिय बटन पर टैप करें।\n\nबीहेवियर पैक्स के लिए भी यही करें।</string>
+    <string name="instr_addon_4">महत्वपूर्ण! सभी एक्सपेरिमेंटल फीचर्स को सक्षम करें।</string>
+
+    <string name="instr_world_1">सेटिंग्स में "बाहरी संग्रहण" चुनें।</string>
+    <string name="instr_world_2">मैप डाउनलोड और इंस्टॉल करें।</string>
+    <string name="instr_world_3">मैप "वर्ल्ड्स" सेक्शन में दिखेगा।</string>
+
+    <string name="instructions_for_the_installation_of_addons_and_textures">ऐडऑन और टेक्सचर इंस्टॉल करने के निर्देश</string>
+    <string name="instructions_for_the_installation_of_worlds">मैप इंस्टॉल करने के निर्देश</string>
+    <string name="installing_addons_and_textures">ऐडऑन और टेक्सचर इंस्टॉल हो रहे हैं</string>
+    <string name="installation_of_worlds">मैप इंस्टॉलेशन</string>
+
+    <string name="supported_versions">समर्थित संस्करण</string>
+    <string name="addon_don_t_work">ऐड-ऑन काम नहीं कर रहा?</string>
+    <string name="to_save_click_the_download_button">सहेजने के लिए “डाउनलोड” बटन पर क्लिक करें।</string>
+
+    <string name="download">डाउनलोड करें</string>
+    <string name="to_install_in_game_click_the_install">खेल में इंस्टॉल करने के लिए “इंस्टॉल” पर क्लिक करें।</string>
+    <string name="install">इंस्टॉल करें</string>
+    <string name="the_file_is_saved_the_path">फ़ाइल इस पथ पर सहेजी गई: </string>
+    <string name="minecraft_is_not_installed">Minecraft इंस्टॉल नहीं है या संस्करण पुराना है।</string>
+    <string name="describe_your_problem">अपनी समस्या बताएं</string>
+    <string name="send">भेजें</string>
+</resources>

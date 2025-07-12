@@ -60,7 +60,7 @@ fun AppDropDown(
             expanded = mExpanded,
             onDismissRequest = { mExpanded = false },
             modifier = Modifier
-                .width(80.dp)
+                .width(100.dp)
                 .heightIn(max = 500.dp)
         ) {
             items.forEach {
