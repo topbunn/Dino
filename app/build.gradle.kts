@@ -48,9 +48,13 @@ android {
 
 dependencies {
 
+
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.kotlinx.serialization.json)
+
+    // Ads
+    implementation (libs.mobileads.yandex)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -63,6 +67,8 @@ dependencies {
     implementation(libs.voyager.transitions)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -80,4 +86,11 @@ dependencies {
 
     implementation(project(":domain"))
     
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("androidx.cursoradapter:cursoradapter:1.0.0-rc02")
+        force("androidx.resourceinspection:resourceinspection-annotation:1.0.0-rc01")
+    }
 }
