@@ -26,6 +26,8 @@ class FavoriteViewModel(application: Application): AndroidViewModel(application)
         _state.update { it.copy(mods = newMods) }
     }
 
+    fun changeOpenMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
+
     fun loadMods() = viewModelScope.launch{
         val mods = repository.getMods().filter { it.isFavorite }
         _state.update { it.copy(mods = mods) }

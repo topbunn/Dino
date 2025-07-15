@@ -57,4 +57,5 @@
     <string name="minecraft_is_not_installed">Minecraft가 설치되지 않았거나 버전이 오래되었습니다</string>
     <string name="describe_your_problem">문제를 설명하세요</string>
     <string name="send">보내기</string>
+    <string name="the_list_is_empty">목록은 비어 있습니다 :(</string>
 </resources>

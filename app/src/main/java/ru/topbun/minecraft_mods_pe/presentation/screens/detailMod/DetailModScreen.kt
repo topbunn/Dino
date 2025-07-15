@@ -48,6 +48,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.IconWithButton
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 import ru.topbun.minecraft_mods_pe.utills.getImageWithNameFile
 
@@ -85,6 +86,8 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
                 Metrics(state.mod)
                 Spacer(Modifier.height(20.dp))
                 SupportVersions(state.mod)
+                Spacer(Modifier.height(20.dp))
+                NativeAd()
                 Spacer(Modifier.height(20.dp))
                 FileButtons(viewModel, state)
             }

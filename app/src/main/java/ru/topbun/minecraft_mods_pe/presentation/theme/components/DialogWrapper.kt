@@ -2,6 +2,7 @@ package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.heightIn
@@ -34,10 +35,17 @@ fun DialogWrapper(
         )
     ){
         Column(
-            modifier = modifier,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-            content = content
-        )
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ){
+            Column(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween,
+                content = content
+            )
+            Box(Modifier.padding(horizontal = 20.dp)){
+                NativeAd()
+            }
+        }
     }
 }

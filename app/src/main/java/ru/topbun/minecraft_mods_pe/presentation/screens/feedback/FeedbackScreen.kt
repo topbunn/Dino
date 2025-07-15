@@ -34,6 +34,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppTextField
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 
 object FeedbackScreen: Tab {
 
@@ -47,7 +48,7 @@ object FeedbackScreen: Tab {
                 .fillMaxSize()
                 .background(Colors.BLACK_BG)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 50.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 50.dp)
         ) {
             val context = LocalContext.current
             val messageSent = stringResource(ru.topbun.domain.R.string.message_is_sent)
@@ -112,6 +113,8 @@ object FeedbackScreen: Tab {
                 message = ""
                 Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
             }
+            Spacer(Modifier.height(20.dp))
+            NativeAd()
         }
     }
 

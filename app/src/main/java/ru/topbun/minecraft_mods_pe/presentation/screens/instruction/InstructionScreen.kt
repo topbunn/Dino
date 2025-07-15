@@ -36,6 +36,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.rippleClickable
 
@@ -63,6 +64,8 @@ object InstructionScreen: Screen {
                         navigator.push(InstructionFragment(it))
                     }
                 }
+                Spacer(Modifier.height(10.dp))
+                NativeAd()
             }
         }
     }

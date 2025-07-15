@@ -56,4 +56,6 @@
     <string name="minecraft_is_not_installed">Minecraft is not installed or the version is outdated.</string>
     <string name="describe_your_problem">Describe your issue</string>
     <string name="send">Send</string>
+
+    <string name="the_list_is_empty">The list is empty :(</string>
 </resources>

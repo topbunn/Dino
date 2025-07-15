@@ -58,4 +58,5 @@
     <string name="minecraft_is_not_installed">Minecraft इंस्टॉल नहीं है या संस्करण पुराना है।</string>
     <string name="describe_your_problem">अपनी समस्या बताएं</string>
     <string name="send">भेजें</string>
+    <string name="the_list_is_empty">सूची खाली है :(</string>
 </resources>

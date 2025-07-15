@@ -1,5 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.main
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +41,10 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppDropDown
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppTextField
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModsList
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.TabRow
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 
@@ -58,6 +61,7 @@ object MainScreen: Tab {
                 .background(Colors.BLACK_BG)
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp)
         ) {
+            val activity = LocalActivity.currentOrThrow
             val parentNavigator = LocalNavigator.currentOrThrow.parent
             val viewModel = viewModel<MainViewModel>()
             val state by viewModel.state.collectAsState()
@@ -65,36 +69,25 @@ object MainScreen: Tab {
             TopBar(viewModel, state)
             Spacer(Modifier.height(20.dp))
             SortBar(viewModel, state)
-            Spacer(Modifier.padding(vertical = 10.dp).fillMaxWidth().height(1.dp).background(Color(0xff464646)))
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                contentPadding = PaddingValues(vertical = 10.dp)
-            ) {
-                if (mods.isNotEmpty()){
-                    items(items = mods){
-                        ModItem(
-                            mod = it,
-                            onClickFavorite = { viewModel.changeFavorite(it) },
-                            onClickMod = { parentNavigator?.push(DetailModScreen(it)) }
-                        )
-                    }
-                } else {
-                    item {
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = "The list is empty :(",
-                            style = Typography.APP_TEXT,
-                            fontSize = 18.sp,
-                            color = Colors.GRAY,
-                            textAlign = TextAlign.Center,
-                            fontFamily = Fonts.SF.BOLD,
-                        )
-                    }
+            Spacer(Modifier
+                .padding(vertical = 10.dp)
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color(0xff464646))
+            )
+            ModsList(
+                mods = mods,
+                onClickFavorite = { viewModel.changeFavorite(it) },
+                onClickMod = {
+                    viewModel.changeOpenMod(it)
                 }
-
+            )
+            state.openMod?.let {
+                InterstitialAd(activity) {
+                    parentNavigator?.push(DetailModScreen(it))
+                    viewModel.changeOpenMod(null)
+                }
             }
-
             LaunchedEffect(this) {
                 viewModel.loadMods()
             }
@@ -154,7 +147,9 @@ private fun TopBar(viewModel: MainViewModel, state: MainState) {
             }
         )
         Image(
-            modifier = Modifier.size(28.dp).noRippleClickable{ navigator.push(FavoriteScreen) },
+            modifier = Modifier
+                .size(28.dp)
+                .noRippleClickable { navigator.push(FavoriteScreen) },
             painter = painterResource(R.drawable.ic_mine_heart_filled),
             contentDescription = "favorite mods",
         )

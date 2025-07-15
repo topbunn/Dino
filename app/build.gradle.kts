@@ -20,6 +20,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val appOpenAdId = property("app_open_ad_id")?.toString() ?: error("Not found banner id in properties")
+        buildConfigField("String", "OPEN_AD_ID", "\"$appOpenAdId\"")
     }
 
     buildTypes {
@@ -40,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     room {
         schemaDirectory("$projectDir/schemas")
@@ -58,6 +62,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.lifecycle.process)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 

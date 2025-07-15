@@ -33,6 +33,7 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.instruction.InstructionT
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 
 class InstructionFragment(private val type: InstructionType): Screen {
@@ -66,6 +67,7 @@ class InstructionFragment(private val type: InstructionType): Screen {
                         image = painterResource(item.imageRes)
                     )
                 }
+                NativeAd()
             }
         }
     }

@@ -1,5 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.splash
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,6 +37,7 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.tabs.TabsScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography.APP_TEXT
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ProgressBar
 
 object SplashScreen: Screen {
@@ -77,6 +80,7 @@ object SplashScreen: Screen {
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val activity = LocalActivity.currentOrThrow
             val navigator = LocalNavigator.currentOrThrow
             var progress by rememberSaveable { mutableFloatStateOf(0f) }
             LaunchedEffect(Unit) {
@@ -84,7 +88,6 @@ object SplashScreen: Screen {
                     progress += 0.001f
                     delay(2)
                 }
-                navigator.push(TabsScreen)
             }
             ProgressBar(
                 progress = progress,
@@ -102,6 +105,9 @@ object SplashScreen: Screen {
                 fontFamily = Fonts.SF.MEDIUM,
                 textAlign = TextAlign.Center
             )
+            InterstitialAd(activity) {
+                navigator.push(TabsScreen)
+            }
         }
     }
 

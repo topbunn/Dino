@@ -47,6 +47,7 @@ object TabsScreen: Screen {
     override fun Content() {
         TabNavigator(tab = MainScreen){
             Scaffold(
+                modifier = Modifier.navigationBarsPadding(),
                 content = {
                     Box(Modifier.fillMaxSize().padding(it)){
                         CurrentTab()

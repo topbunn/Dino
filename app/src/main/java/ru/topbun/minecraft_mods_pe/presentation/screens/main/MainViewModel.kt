@@ -52,6 +52,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, state.value.mods)
 
+    fun changeOpenMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
+
     fun changeFavorite(mod: ModEntity) = viewModelScope.launch{
         val favorite = repository.getFavoriteWithModId(mod.id) ?: FavoriteEntity(modId = mod.id, status = false)
         val newFavorite = favorite.copy(status = !favorite.status)

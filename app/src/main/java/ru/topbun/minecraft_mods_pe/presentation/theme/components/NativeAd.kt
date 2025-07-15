@@ -1,0 +1,71 @@
+package ru.topbun.minecraft_mods_pe.presentation.theme.components
+
+import android.util.Log
+import android.view.LayoutInflater
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.yandex.mobile.ads.common.ImpressionData
+import com.yandex.mobile.ads.nativeads.NativeAd
+import com.yandex.mobile.ads.nativeads.NativeAdEventListener
+import com.yandex.mobile.ads.nativeads.NativeAdException
+import com.yandex.mobile.ads.nativeads.NativeAdView
+import com.yandex.mobile.ads.nativeads.NativeAdViewBinder
+import ru.topbun.minecraft_mods_pe.R
+import ru.topbun.minecraft_mods_pe.presentation.NativeAdViewModel
+
+@Composable
+fun NativeAd(viewModel: NativeAdViewModel = viewModel()) {
+    val nativeAd by viewModel.nativeAd.collectAsState()
+
+    if (nativeAd != null) {
+        AndroidView(
+            modifier = Modifier.fillMaxWidth(),
+            factory = { context ->
+                LayoutInflater.from(context).inflate(R.layout.native_ad_container, null) as NativeAdView
+            },
+            update = { adView ->
+                bindAdToView(nativeAd!!, adView)
+            }
+        )
+    }
+}
+
+private fun bindAdToView(ad: NativeAd, adView: NativeAdView) {
+    val binder = NativeAdViewBinder.Builder(adView)
+        .setTitleView(adView.findViewById(R.id.title))
+        .setDomainView(adView.findViewById(R.id.domain))
+        .setWarningView(adView.findViewById(R.id.warning))
+        .setSponsoredView(adView.findViewById(R.id.sponsored))
+        .setFeedbackView(adView.findViewById(R.id.feedback))
+        .setCallToActionView(adView.findViewById(R.id.call_to_action))
+        .setMediaView(adView.findViewById(R.id.media))
+        .setIconView(adView.findViewById(R.id.icon))
+        .setPriceView(adView.findViewById(R.id.price))
+        .setBodyView(adView.findViewById(R.id.body))
+        .build()
+
+    try {
+        ad.bindNativeAd(binder)
+
+        ad.setNativeAdEventListener(object : NativeAdEventListener {
+            override fun onAdClicked() {
+                Log.d("NativeAd", "Ad clicked")
+            }
+
+            override fun onLeftApplication() {}
+
+            override fun onReturnedToApplication() {}
+
+            override fun onImpression(data: ImpressionData?) {
+                Log.d("NativeAd", "Ad impression")
+            }
+        })
+    } catch (e: NativeAdException) {
+        Log.e("NativeAd", "Error binding ad: ${e.message}")
+    }
+}
