@@ -67,7 +67,7 @@ class InstructionFragment(private val type: InstructionType): Screen {
                         image = painterResource(item.imageRes)
                     )
                 }
-                NativeAd()
+                NativeAd.Yandex()
             }
         }
     }

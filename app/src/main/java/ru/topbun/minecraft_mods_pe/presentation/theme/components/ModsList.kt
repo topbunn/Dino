@@ -12,15 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.topbun.domain.entity.ModEntity
-
-import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
-import kotlin.collections.forEachIndexed
-import kotlin.collections.isNotEmpty
 
 @Composable
 fun ColumnScope.ModsList(mods: List<ModEntity>, content: @Composable (() -> Unit)? = null, onClickFavorite: (ModEntity) -> Unit, onClickMod: (ModEntity) -> Unit) {
@@ -43,7 +38,7 @@ fun ColumnScope.ModsList(mods: List<ModEntity>, content: @Composable (() -> Unit
                 }
                 if (index != 0 && ((index + 1) % 2 == 0)){
                     item {
-                        NativeAd()
+                        NativeAd.Applovin()
                     }
                 }
             }

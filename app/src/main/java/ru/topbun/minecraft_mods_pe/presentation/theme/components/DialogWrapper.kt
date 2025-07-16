@@ -44,7 +44,7 @@ fun DialogWrapper(
                 content = content
             )
             Box(Modifier.padding(horizontal = 20.dp)){
-                NativeAd()
+                NativeAd.Yandex()
             }
         }
     }

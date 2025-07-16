@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,9 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -37,14 +32,10 @@ import ru.topbun.domain.R
 import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScreen
 import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
-import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
-import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppDropDown
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppTextField
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdYandex
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModsList
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.TabRow
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
 
@@ -83,7 +74,7 @@ object MainScreen: Tab {
                 }
             )
             state.openMod?.let {
-                InterstitialAd(activity) {
+                InterstitialAdYandex(activity) {
                     parentNavigator?.push(DetailModScreen(it))
                     viewModel.changeOpenMod(null)
                 }

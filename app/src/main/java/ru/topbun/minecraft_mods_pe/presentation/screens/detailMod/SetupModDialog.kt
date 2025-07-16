@@ -1,5 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.detailMod
 
+import android.content.Context
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,12 +26,12 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.DialogWrapper
-import ru.topbun.minecraft_mods_pe.utills.installMod
 import java.io.File
 
 @Composable
 fun SetupModDialog(
     assetFilePath: String,
+    installMod: (Context, File) -> Unit,
     onDismissDialog: () -> Unit,
 ) {
     val context = LocalContext.current

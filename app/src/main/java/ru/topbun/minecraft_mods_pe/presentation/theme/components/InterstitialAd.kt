@@ -1,12 +1,15 @@
 package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
 import android.app.Activity
-import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.DisposableEffectResult
-import androidx.compose.ui.Modifier
+import com.applovin.mediation.MaxAd
+import com.applovin.mediation.MaxAdListener
+import com.applovin.mediation.MaxError
+import com.applovin.mediation.ads.MaxInterstitialAd
 import com.yandex.mobile.ads.common.AdError
 import com.yandex.mobile.ads.common.AdRequestConfiguration
 import com.yandex.mobile.ads.common.AdRequestError
@@ -15,14 +18,17 @@ import com.yandex.mobile.ads.interstitial.InterstitialAd
 import com.yandex.mobile.ads.interstitial.InterstitialAdEventListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoadListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
+import ru.topbun.minecraft_mods_pe.BuildConfig
+import java.util.concurrent.TimeUnit
+import kotlin.math.pow
 
 @Composable
-fun InterstitialAd(activity: Activity, onAdLoaded: ()-> Unit) {
+fun InterstitialAdYandex(activity: Activity, onAdLoaded: ()-> Unit) {
     var interstitialAd: InterstitialAd? = null
     var interstitialAdLoader: InterstitialAdLoader? = null
 
     fun loadInterstitialAd() {
-        val adRequestConfiguration = AdRequestConfiguration.Builder("demo-interstitial-yandex").build()
+        val adRequestConfiguration = AdRequestConfiguration.Builder(BuildConfig.INSERSTITIAL_AD_ID).build()
         interstitialAdLoader?.loadAd(adRequestConfiguration)
     }
 
@@ -37,6 +43,7 @@ fun InterstitialAd(activity: Activity, onAdLoaded: ()-> Unit) {
 
             override fun onAdFailedToLoad(adRequestError: AdRequestError) {
                 Log.d("YANDEX_INTER_AD", "При загрузке рекламы приходила ошибка: ${adRequestError}")
+                onAdLoaded()
             }
         })
     }
@@ -53,6 +60,7 @@ fun InterstitialAd(activity: Activity, onAdLoaded: ()-> Unit) {
 
                 interstitialAd?.setAdEventListener(null)
                 interstitialAd = null
+                onAdLoaded()
 
             }
             override fun onAdDismissed() {
@@ -76,6 +84,56 @@ fun InterstitialAd(activity: Activity, onAdLoaded: ()-> Unit) {
             interstitialAdLoader = null
             interstitialAd?.setAdEventListener(null)
             interstitialAd = null
+        }
+    }
+}
+
+@Composable
+fun InterstitialAdApplovin(activity: Activity, onAdFinished: () -> Unit = {}) {
+    val interstitialAd = MaxInterstitialAd(BuildConfig.APPLOVIN_INSERSTITIAL_AD_ID, activity)
+    var retryAttempt = 0
+
+    interstitialAd.setListener(object : MaxAdListener {
+        override fun onAdLoaded(ad: MaxAd) {
+            retryAttempt = 0
+            if (interstitialAd.isReady) {
+                interstitialAd.showAd()
+            }
+        }
+
+        override fun onAdLoadFailed(adUnitId: String, error: MaxError) {
+            retryAttempt++
+            val delay = TimeUnit.SECONDS.toMillis(2.0.pow(minOf(6, retryAttempt)).toLong())
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                interstitialAd.loadAd()
+            }, delay)
+        }
+
+        override fun onAdDisplayFailed(ad: MaxAd, error: MaxError) {
+            interstitialAd.loadAd()
+            onAdFinished()
+        }
+
+        override fun onAdDisplayed(ad: MaxAd) {
+            Log.d("APPLOVIN_INTER_AD", "Ad displayed")
+        }
+
+        override fun onAdClicked(ad: MaxAd) {
+            Log.d("APPLOVIN_INTER_AD", "Ad clicked")
+        }
+
+        override fun onAdHidden(ad: MaxAd) {
+            interstitialAd.loadAd()
+            onAdFinished()
+        }
+    })
+
+    interstitialAd.loadAd()
+
+    DisposableEffect(Unit) {
+        onDispose {
+            interstitialAd.setListener(null)
         }
     }
 }

@@ -5,15 +5,15 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
 import com.yandex.mobile.ads.common.AdRequestError
-import com.yandex.mobile.ads.common.MobileAds
 import com.yandex.mobile.ads.nativeads.NativeAd
 import com.yandex.mobile.ads.nativeads.NativeAdLoadListener
 import com.yandex.mobile.ads.nativeads.NativeAdLoader
 import com.yandex.mobile.ads.nativeads.NativeAdRequestConfiguration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import ru.topbun.minecraft_mods_pe.BuildConfig
 
-class NativeAdViewModel(application: Application) : AndroidViewModel(application) {
+class YandexNativeAdViewModel(application: Application) : AndroidViewModel(application) {
 
     private var nativeAdLoader: NativeAdLoader? = null
     private val _nativeAd = MutableStateFlow<NativeAd?>(null)
@@ -36,7 +36,7 @@ class NativeAdViewModel(application: Application) : AndroidViewModel(application
             })
         }
 
-        val request = NativeAdRequestConfiguration.Builder("demo-native-content-yandex")
+        val request = NativeAdRequestConfiguration.Builder(BuildConfig.NATIVE_AD_ID)
             .build()
 
         nativeAdLoader?.loadAd(request)

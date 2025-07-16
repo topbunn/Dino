@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import ru.topbun.minecraft_mods_pe.R
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
@@ -114,7 +113,7 @@ object FeedbackScreen: Tab {
                 Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
             }
             Spacer(Modifier.height(20.dp))
-            NativeAd()
+            NativeAd.Yandex()
         }
     }
 

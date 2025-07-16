@@ -1,7 +1,5 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.instruction
 
-import android.widget.Space
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,10 +32,8 @@ import ru.topbun.domain.R
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.rippleClickable
 
 object InstructionScreen: Screen {
 
@@ -65,7 +60,7 @@ object InstructionScreen: Screen {
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                NativeAd()
+                NativeAd.Yandex()
             }
         }
     }

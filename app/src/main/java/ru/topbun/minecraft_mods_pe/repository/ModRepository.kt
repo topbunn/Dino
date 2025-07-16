@@ -1,6 +1,7 @@
 package ru.topbun.minecraft_mods_pe.repository
 
 import android.content.Context
+import android.content.pm.PackageManager
 import kotlinx.serialization.json.Json
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
@@ -18,6 +19,14 @@ class ModRepository(private val context: Context){
             val favorite = favorites.firstOrNull { it.modId == mod.id }?.status == true
             mod.copy(isFavorite = favorite)
         }
+    }
+
+    fun getVersionMinecraft() = try {
+        val packageInfo = context.packageManager.getPackageInfo("com.mojang.minecraftpe", 0)
+        packageInfo.versionName.takeIf { it != "com.mojang.minecraftpe" }
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        null
     }
 
     suspend fun getMod(id: Int): ModEntity {

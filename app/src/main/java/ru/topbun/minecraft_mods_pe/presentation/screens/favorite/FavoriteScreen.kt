@@ -3,7 +3,6 @@ package ru.topbun.minecraft_mods_pe.presentation.screens.favorite
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,9 +31,8 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScree
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdYandex
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModsList
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 
 object FavoriteScreen : Tab {
@@ -76,10 +73,10 @@ object FavoriteScreen : Tab {
                             )
                         }
                         if (index != 0 && ((index + 1) % 2 == 0)){
-                            item { NativeAd() }
+                            item { NativeAd.Yandex() }
                         }
                         if (state.mods.size == 1){
-                            item { NativeAd() }
+                            item { NativeAd.Yandex() }
                         }
                     }
                 } else {
@@ -97,7 +94,7 @@ object FavoriteScreen : Tab {
                 }
             }
             state.openMod?.let {
-                InterstitialAd(activity) {
+                InterstitialAdYandex(activity) {
                     parentNavigator?.push(DetailModScreen(it))
                     viewModel.changeOpenMod(null)
                 }

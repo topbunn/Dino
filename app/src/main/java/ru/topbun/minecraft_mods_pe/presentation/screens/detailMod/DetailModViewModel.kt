@@ -1,6 +1,10 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.detailMod
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +14,7 @@ import kotlinx.coroutines.launch
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.minecraft_mods_pe.repository.ModRepository
+import java.io.File
 
 class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
 
@@ -21,6 +26,31 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
     fun changeStageSetupMod(path: String?) = _state.update { it.copy(choiceFilePathSetup = path) }
     fun openDontWorkDialog(value: Boolean) = _state.update { it.copy(dontWorkAddonDialogIsOpen = value) }
 
+    private fun loadVersion(){
+        val version = repository.getVersionMinecraft()
+        _state.update { it.copy(versionMine = version) }
+    }
+
+    fun installMod(context: Context, file: File) {
+        val uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider",
+            file
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/octet-stream")
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            setPackage("com.mojang.minecraftpe")
+        }
+
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, context.getString(ru.topbun.domain.R.string.minecraft_is_not_installed), Toast.LENGTH_LONG).show()
+        }
+    }
+
     fun changeFavorite() = viewModelScope.launch{
         val mod = state.value.mod
         val favorite = repository.getFavoriteWithModId(mod.id) ?: FavoriteEntity(modId = mod.id, status = false)
@@ -28,6 +58,10 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
         repository.addFavorite(newFavorite)
         val newMod = _state.value.mod.copy(isFavorite = newFavorite.status, countFavorite = if (newFavorite.status) mod.countFavorite + 1 else mod.countFavorite - 1)
         _state.update { it.copy(mod = newMod) }
+    }
+
+    init {
+        loadVersion()
     }
 
 }

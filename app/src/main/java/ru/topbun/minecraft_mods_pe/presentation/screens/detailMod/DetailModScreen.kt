@@ -61,6 +61,8 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
         val context = LocalContext.current
         val viewModel = remember { DetailModViewModel(context, mod) }
         val state by viewModel.state.collectAsState()
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -85,21 +87,36 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
                 Spacer(Modifier.height(10.dp))
                 Metrics(state.mod)
                 Spacer(Modifier.height(20.dp))
-                SupportVersions(state.mod)
+                SupportVersions(state)
                 Spacer(Modifier.height(20.dp))
-                NativeAd()
+                NativeAd.Yandex()
                 Spacer(Modifier.height(20.dp))
                 FileButtons(viewModel, state)
             }
         }
         state.choiceFilePathSetup?.let {
-            SetupModDialog(it) {
+            SetupModDialog(it, viewModel::installMod) {
                 viewModel.changeStageSetupMod(null)
             }
         }
         if (state.dontWorkAddonDialogIsOpen){
             DontWorkAddonDialog { viewModel.openDontWorkDialog(false) }
         }
+    }
+
+}
+
+@Composable
+private fun MinecraftVersion(state: DetailModState) {
+    state.versionMine?.let {
+        Spacer(Modifier.height(20.dp))
+        Text(
+            text = "Minecraft version: $it",
+            style = Typography.APP_TEXT,
+            fontSize = 18.sp,
+            color = Colors.WHITE,
+            fontFamily = Fonts.SF.SEMI_BOLD,
+        )
     }
 }
 
@@ -135,7 +152,7 @@ private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SupportVersions(mod: ModEntity) {
+private fun SupportVersions(state: DetailModState) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -150,18 +167,22 @@ private fun SupportVersions(mod: ModEntity) {
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            mod.supportVersion.forEach {
-                SupportVersionItem(it)
+            state.mod.supportVersion.forEach { version ->
+                SupportVersionItem(
+                    value = version,
+                    actualVersion = state.versionMine?.let { it.contains(version) } ?: false
+                )
             }
         }
     }
+    MinecraftVersion(state)
 }
 
 @Composable
-private fun SupportVersionItem(value: String) {
+private fun SupportVersionItem(value: String, actualVersion: Boolean = false) {
     Text(
         modifier = Modifier
-            .background(Colors.WHITE, RoundedCornerShape(6.dp))
+            .background(if (actualVersion) Colors.GREEN else Colors.WHITE, RoundedCornerShape(6.dp))
             .padding(horizontal = 10.dp, vertical = 6.dp),
         text = value,
         style = Typography.APP_TEXT,

@@ -11,13 +11,13 @@ import com.yandex.mobile.ads.common.MobileAds
 import com.yandex.mobile.ads.appopenad.*
 import com.yandex.mobile.ads.common.AdRequestConfiguration
 import com.yandex.mobile.ads.common.AdRequestError
+import ru.topbun.minecraft_mods_pe.BuildConfig
 
 class AppOpenAdManager(private val application: Application) {
 
     private var appOpenAd: AppOpenAd? = null
-    private val adUnitId = "demo-appopenad-yandex"
 
-    private val adRequest = AdRequestConfiguration.Builder(adUnitId).build()
+    private val adRequest = AdRequestConfiguration.Builder(BuildConfig.OPEN_AD_ID).build()
     private val adLoader = AppOpenAdLoader(application)
 
     init {
