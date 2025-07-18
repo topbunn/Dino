@@ -45,13 +45,6 @@
         app:layout_constraintStart_toStartOf="@+id/applovin_body"
         app:layout_constraintTop_toBottomOf="@+id/applovin_body"/>
 
-    <FrameLayout
-        android:id="@+id/applovin_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/applovin_media"
-        app:layout_constraintTop_toTopOf="@+id/applovin_media" />
-
     <ImageView
         android:id="@+id/applovin_feedback"
         android:layout_width="24dp"

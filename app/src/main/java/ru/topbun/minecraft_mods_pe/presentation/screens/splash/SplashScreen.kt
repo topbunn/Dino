@@ -36,8 +36,7 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.tabs.TabsScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography.APP_TEXT
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdApplovin
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdYandex
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ProgressBar
 
 object SplashScreen: Screen {
@@ -85,9 +84,10 @@ object SplashScreen: Screen {
             var progress by rememberSaveable { mutableFloatStateOf(0f) }
             LaunchedEffect(Unit) {
                 while (progress < 1){
-                    progress += 0.001f
-                    delay(2)
+                    progress += 0.0015f
+                    delay(10)
                 }
+                navigator.push(TabsScreen)
             }
             ProgressBar(
                 progress = progress,
@@ -105,9 +105,7 @@ object SplashScreen: Screen {
                 fontFamily = Fonts.SF.MEDIUM,
                 textAlign = TextAlign.Center
             )
-            InterstitialAdApplovin(activity) {
-                navigator.push(TabsScreen)
-            }
+            InterstitialAd(activity)
         }
     }
 

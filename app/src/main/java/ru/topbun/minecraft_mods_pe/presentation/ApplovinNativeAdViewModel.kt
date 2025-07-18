@@ -2,6 +2,7 @@ package ru.topbun.minecraft_mods_pe.presentation
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import androidx.lifecycle.AndroidViewModel
 import com.applovin.mediation.MaxAd
@@ -11,6 +12,7 @@ import com.applovin.mediation.nativeAds.MaxNativeAdListener
 import com.applovin.mediation.nativeAds.MaxNativeAdLoader
 import com.applovin.mediation.nativeAds.MaxNativeAdView
 import com.applovin.mediation.nativeAds.MaxNativeAdViewBinder
+import com.applovin.sdk.AppLovinSdk
 import ru.topbun.minecraft_mods_pe.BuildConfig
 import ru.topbun.minecraft_mods_pe.R
 
@@ -23,14 +25,13 @@ class ApplovinNativeAdViewModel(application: Application) : AndroidViewModel(app
     private fun createNativeAdView(context: Context): MaxNativeAdView {
         val binder: MaxNativeAdViewBinder =
             MaxNativeAdViewBinder.Builder(R.layout.applovin_native_ad_container)
-//                .setTitleTextViewId(R.id.applovin_title)
-//                .setBodyTextViewId(R.id.applovin_body)
-//                .setAdvertiserTextViewId(R.id.applovin_advertiser)
-//                .setIconImageViewId(R.id.applovin_icon)
-//                .setStarRatingContentViewGroupId(R.id.applovin_rating)
-//                .setMediaContentViewGroupId(R.id.applovin_media)
-//                .setOptionsContentViewGroupId(R.id.applovin_options)
-//                .setCallToActionButtonId(R.id.applovin_call_to_action)
+                .setTitleTextViewId(R.id.applovin_title)
+                .setBodyTextViewId(R.id.applovin_body)
+                .setAdvertiserTextViewId(R.id.applovin_advertiser)
+                .setIconImageViewId(R.id.applovin_icon)
+                .setMediaContentViewGroupId(R.id.applovin_media)
+                .setOptionsContentViewGroupId(R.id.applovin_options)
+                .setCallToActionButtonId(R.id.applovin_call_to_action)
                 .build()
         return MaxNativeAdView(binder, context)
     }
@@ -63,9 +64,9 @@ class ApplovinNativeAdViewModel(application: Application) : AndroidViewModel(app
             nativeAdContainerView?.addView(nativeAdView)
         }
 
-        override fun onNativeAdLoadFailed(adUnitId: String, error: MaxError)
-        {
-
+        override fun onNativeAdLoadFailed(adUnitId: String, error: MaxError) {
+            Log.e("APPLOVIN", error.toString())
+            Log.e("APPLOVIN", error.waterfall.toString())
         }
 
         override fun onNativeAdClicked(nativeAd: MaxAd) {}

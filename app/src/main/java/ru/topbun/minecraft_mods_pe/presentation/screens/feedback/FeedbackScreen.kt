@@ -113,7 +113,7 @@ object FeedbackScreen: Tab {
                 Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
             }
             Spacer(Modifier.height(20.dp))
-            NativeAd.Yandex()
+            NativeAd(context)
         }
     }
 

@@ -31,7 +31,7 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScree
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdYandex
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModItem
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 
@@ -73,10 +73,10 @@ object FavoriteScreen : Tab {
                             )
                         }
                         if (index != 0 && ((index + 1) % 2 == 0)){
-                            item { NativeAd.Yandex() }
+                            item { NativeAd(activity.applicationContext) }
                         }
                         if (state.mods.size == 1){
-                            item { NativeAd.Yandex() }
+                            item { NativeAd(activity.applicationContext) }
                         }
                     }
                 } else {
@@ -94,7 +94,7 @@ object FavoriteScreen : Tab {
                 }
             }
             state.openMod?.let {
-                InterstitialAdYandex(activity) {
+                InterstitialAd(activity) {
                     parentNavigator?.push(DetailModScreen(it))
                     viewModel.changeOpenMod(null)
                 }

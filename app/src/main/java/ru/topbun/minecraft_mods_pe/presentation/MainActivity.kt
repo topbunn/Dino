@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import cafe.adriel.voyager.navigator.Navigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import ru.topbun.minecraft_mods_pe.presentation.screens.splash.SplashScreen
 import ru.topbun.minecraft_mods_pe.presentation.screens.tabs.TabsScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.colorScheme
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
             MaterialTheme(colorScheme) {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setStatusBarColor(Colors.BLACK_BG, false)
-                Navigator(TabsScreen)
+                Navigator(SplashScreen)
             }
         }
     }

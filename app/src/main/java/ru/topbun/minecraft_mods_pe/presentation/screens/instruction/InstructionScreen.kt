@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ object InstructionScreen: Screen {
                 .statusBarsPadding()
                 .background(Colors.BLACK_BG)
         ) {
+            val context = LocalContext.current
             val navigator = LocalNavigator.currentOrThrow
             Header()
             Spacer(Modifier.height(20.dp))
@@ -60,7 +62,7 @@ object InstructionScreen: Screen {
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                NativeAd.Yandex()
+                NativeAd(context)
             }
         }
     }

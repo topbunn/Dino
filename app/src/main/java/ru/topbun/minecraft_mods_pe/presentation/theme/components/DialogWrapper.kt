@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -34,6 +35,7 @@ fun DialogWrapper(
             usePlatformDefaultWidth = false
         )
     ){
+        val context = LocalContext.current
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ){
@@ -44,7 +46,7 @@ fun DialogWrapper(
                 content = content
             )
             Box(Modifier.padding(horizontal = 20.dp)){
-                NativeAd.Yandex()
+                NativeAd(context)
             }
         }
     }

@@ -1,4 +1,5 @@
 [versions]
+analytics = "7.2.0"
 applovinSdk = "13.3.1"
 lifecycleViewmodelCompose = "2.9.1"
 mobileads = "7.14.1"
@@ -22,6 +23,7 @@ material = "1.12.0"
 lifecycleProcess = "2.9.1"
 
 [libraries]
+analytics = { module = "io.appmetrica.analytics:analytics", version.ref = "analytics" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }

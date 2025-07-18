@@ -34,7 +34,7 @@ import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppDropDown
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppTextField
-import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAdYandex
+import ru.topbun.minecraft_mods_pe.presentation.theme.components.InterstitialAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.ModsList
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.TabRow
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
@@ -74,7 +74,7 @@ object MainScreen: Tab {
                 }
             )
             state.openMod?.let {
-                InterstitialAdYandex(activity) {
+                InterstitialAd(activity) {
                     parentNavigator?.push(DetailModScreen(it))
                     viewModel.changeOpenMod(null)
                 }

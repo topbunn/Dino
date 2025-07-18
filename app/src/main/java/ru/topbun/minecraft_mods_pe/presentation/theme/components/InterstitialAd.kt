@@ -6,6 +6,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Modifier
 import com.applovin.mediation.MaxAd
 import com.applovin.mediation.MaxAdListener
 import com.applovin.mediation.MaxError
@@ -18,122 +21,157 @@ import com.yandex.mobile.ads.interstitial.InterstitialAd
 import com.yandex.mobile.ads.interstitial.InterstitialAdEventListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoadListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
+import kotlinx.coroutines.delay
 import ru.topbun.minecraft_mods_pe.BuildConfig
+import ru.topbun.minecraft_mods_pe.utills.LocationAd.*
+import ru.topbun.minecraft_mods_pe.utills.getLocation
 import java.util.concurrent.TimeUnit
 import kotlin.math.pow
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 @Composable
-fun InterstitialAdYandex(activity: Activity, onAdLoaded: ()-> Unit) {
-    var interstitialAd: InterstitialAd? = null
-    var interstitialAdLoader: InterstitialAdLoader? = null
-
-    fun loadInterstitialAd() {
-        val adRequestConfiguration = AdRequestConfiguration.Builder(BuildConfig.INSERSTITIAL_AD_ID).build()
-        interstitialAdLoader?.loadAd(adRequestConfiguration)
-    }
-
-    interstitialAdLoader = InterstitialAdLoader(activity.applicationContext).apply {
-        setAdLoadListener(object : InterstitialAdLoadListener {
-            override fun onAdLoaded(ad: InterstitialAd) {
-                interstitialAd = ad
-                Log.d("YANDEX_INTER_AD", "Реклама загружена и готова к показу")
-                ad.show(activity)
-                onAdLoaded()
-            }
-
-            override fun onAdFailedToLoad(adRequestError: AdRequestError) {
-                Log.d("YANDEX_INTER_AD", "При загрузке рекламы приходила ошибка: ${adRequestError}")
-                onAdLoaded()
-            }
-        })
-    }
-
-    interstitialAd?.apply {
-        setAdEventListener(object : InterstitialAdEventListener {
-
-            override fun onAdShown() {
-                Log.d("YANDEX_INTER_AD", "Реклама показана успешно")
-                onAdLoaded()
-            }
-            override fun onAdFailedToShow(adError: AdError) {
-                Log.d("YANDEX_INTER_AD", "Во время показа рекламы произошла ошибка: ${adError.description}")
-
-                interstitialAd?.setAdEventListener(null)
-                interstitialAd = null
-                onAdLoaded()
-
-            }
-            override fun onAdDismissed() {
-                interstitialAd?.setAdEventListener(null)
-                interstitialAd = null
-                Log.d("YANDEX_INTER_AD", "onAdDismissed()")
-            }
-            override fun onAdClicked() {
-                Log.d("YANDEX_INTER_AD", "onAdClicked()")
-            }
-            override fun onAdImpression(impressionData: ImpressionData?) {
-                Log.d("YANDEX_INTER_AD", "onAdImpression()")
-            }
-        })
-        show(activity)
-    }
-    loadInterstitialAd()
-    DisposableEffect(Unit) {
-        onDispose {
-            interstitialAdLoader?.setAdLoadListener(null)
-            interstitialAdLoader = null
-            interstitialAd?.setAdEventListener(null)
-            interstitialAd = null
+fun InterstitialAd(activity: Activity,  onAdLoaded: () -> Unit = {}) {
+//    if (Random.nextInt(0,6) != 0){
+        val location = activity.applicationContext.getLocation()
+        when(location){
+            RU -> AppInterstitialAd.Yandex(activity, onAdLoaded)
+            OTHER -> AppInterstitialAd.Applovin(activity, onAdLoaded)
         }
-    }
+//    } else {
+//        onAdLoaded()
+//    }
 }
 
-@Composable
-fun InterstitialAdApplovin(activity: Activity, onAdFinished: () -> Unit = {}) {
-    val interstitialAd = MaxInterstitialAd(BuildConfig.APPLOVIN_INSERSTITIAL_AD_ID, activity)
-    var retryAttempt = 0
+sealed interface AppInterstitialAd{
 
-    interstitialAd.setListener(object : MaxAdListener {
-        override fun onAdLoaded(ad: MaxAd) {
-            retryAttempt = 0
-            if (interstitialAd.isReady) {
-                interstitialAd.showAd()
+    object Yandex:AppInterstitialAd{
+
+        @Composable
+        operator fun invoke(activity: Activity, onAdLoaded: () -> Unit = {}){
+            var interstitialAd: InterstitialAd? = null
+            var interstitialAdLoader: InterstitialAdLoader? = null
+
+            fun loadInterstitialAd() {
+                val adRequestConfiguration = AdRequestConfiguration.Builder(BuildConfig.INSERSTITIAL_AD_ID).build()
+                interstitialAdLoader?.loadAd(adRequestConfiguration)
+            }
+
+            interstitialAdLoader = InterstitialAdLoader(activity.applicationContext).apply {
+                setAdLoadListener(object : InterstitialAdLoadListener {
+                    override fun onAdLoaded(ad: InterstitialAd) {
+                        interstitialAd = ad
+                        Log.d("YANDEX_INTER_AD", "Реклама загружена и готова к показу")
+                        ad.show(activity)
+                        onAdLoaded()
+                    }
+
+                    override fun onAdFailedToLoad(adRequestError: AdRequestError) {
+                        Log.d("YANDEX_INTER_AD", "При загрузке рекламы приходила ошибка: ${adRequestError}")
+                        onAdLoaded()
+                    }
+                })
+            }
+
+            interstitialAd?.apply {
+                setAdEventListener(object : InterstitialAdEventListener {
+
+                    override fun onAdShown() {
+                        Log.d("YANDEX_INTER_AD", "Реклама показана успешно")
+                        onAdLoaded()
+                    }
+                    override fun onAdFailedToShow(adError: AdError) {
+                        Log.d("YANDEX_INTER_AD", "Во время показа рекламы произошла ошибка: ${adError.description}")
+
+                        interstitialAd?.setAdEventListener(null)
+                        interstitialAd = null
+                        onAdLoaded()
+
+                    }
+                    override fun onAdDismissed() {
+                        interstitialAd?.setAdEventListener(null)
+                        interstitialAd = null
+                        Log.d("YANDEX_INTER_AD", "onAdDismissed()")
+                        onAdLoaded()
+                    }
+                    override fun onAdClicked() {
+                        Log.d("YANDEX_INTER_AD", "onAdClicked()")
+                        onAdLoaded()
+                    }
+                    override fun onAdImpression(impressionData: ImpressionData?) {
+                        Log.d("YANDEX_INTER_AD", "onAdImpression()")
+                        onAdLoaded()
+                    }
+                })
+                show(activity)
+            }
+            SideEffect {
+                loadInterstitialAd()
+            }
+            DisposableEffect(Unit) {
+                onDispose {
+                    interstitialAdLoader?.setAdLoadListener(null)
+                    interstitialAdLoader = null
+                    interstitialAd?.setAdEventListener(null)
+                    interstitialAd = null
+                }
             }
         }
 
-        override fun onAdLoadFailed(adUnitId: String, error: MaxError) {
-            retryAttempt++
-            val delay = TimeUnit.SECONDS.toMillis(2.0.pow(minOf(6, retryAttempt)).toLong())
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                interstitialAd.loadAd()
-            }, delay)
-        }
-
-        override fun onAdDisplayFailed(ad: MaxAd, error: MaxError) {
-            interstitialAd.loadAd()
-            onAdFinished()
-        }
-
-        override fun onAdDisplayed(ad: MaxAd) {
-            Log.d("APPLOVIN_INTER_AD", "Ad displayed")
-        }
-
-        override fun onAdClicked(ad: MaxAd) {
-            Log.d("APPLOVIN_INTER_AD", "Ad clicked")
-        }
-
-        override fun onAdHidden(ad: MaxAd) {
-            interstitialAd.loadAd()
-            onAdFinished()
-        }
-    })
-
-    interstitialAd.loadAd()
-
-    DisposableEffect(Unit) {
-        onDispose {
-            interstitialAd.setListener(null)
-        }
     }
+
+    object Applovin:AppInterstitialAd{
+
+        @Composable
+        operator fun invoke(activity: Activity, onAdFinished: () -> Unit = {}) {
+            val interstitialAd = MaxInterstitialAd(BuildConfig.APPLOVIN_INSERSTITIAL_AD_ID, activity)
+
+            interstitialAd.setListener(object : MaxAdListener {
+                override fun onAdLoaded(ad: MaxAd) {
+                    if (interstitialAd.isReady) {
+                        interstitialAd.showAd()
+                        onAdFinished()
+                    }
+                }
+
+                override fun onAdLoadFailed(adUnitId: String, error: MaxError) {
+                    onAdFinished()
+                }
+
+                override fun onAdDisplayFailed(ad: MaxAd, error: MaxError) {
+                    interstitialAd.loadAd()
+                    onAdFinished()
+                }
+
+                override fun onAdDisplayed(ad: MaxAd) {
+                    Log.d("APPLOVIN_INTER_AD", "Ad displayed")
+                    onAdFinished()
+                }
+
+                override fun onAdClicked(ad: MaxAd) {
+                    Log.d("APPLOVIN_INTER_AD", "Ad clicked")
+                    onAdFinished()
+                }
+
+                override fun onAdHidden(ad: MaxAd) {
+                    interstitialAd.loadAd()
+                    onAdFinished()
+                }
+            })
+
+            LaunchedEffect(Unit) {
+                interstitialAd.loadAd()
+                delay(10_000)
+                if (!interstitialAd.isReady) onAdFinished()
+            }
+
+            DisposableEffect(Unit) {
+                onDispose {
+                    interstitialAd.setListener(null)
+                }
+            }
+        }
+
+    }
+
 }

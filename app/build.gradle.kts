@@ -20,6 +20,9 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        val appKeyMetric = property("metric_key")?.toString() ?: error("Not found appKeyMetric in properties")
+        buildConfigField("String", "METRIC_KEY", "\"$appKeyMetric\"")
+
         val appOpenAdId = property("app_open_ad_id")?.toString() ?: error("Not found appOpenAdId in properties")
         buildConfigField("String", "OPEN_AD_ID", "\"$appOpenAdId\"")
 
@@ -77,6 +80,7 @@ dependencies {
     // Ads
     implementation (libs.mobileads.yandex)
     implementation(libs.applovin.sdk)
+    implementation(libs.analytics)
 
     // Room
     implementation(libs.androidx.room.runtime)

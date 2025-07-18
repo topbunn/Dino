@@ -1,5 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -19,10 +20,23 @@ import com.yandex.mobile.ads.nativeads.NativeAdViewBinder
 import ru.topbun.minecraft_mods_pe.R
 import ru.topbun.minecraft_mods_pe.presentation.ApplovinNativeAdViewModel
 import ru.topbun.minecraft_mods_pe.presentation.YandexNativeAdViewModel
+import ru.topbun.minecraft_mods_pe.utills.LocationAd.OTHER
+import ru.topbun.minecraft_mods_pe.utills.LocationAd.RU
+import ru.topbun.minecraft_mods_pe.utills.getLocation
 
-sealed interface NativeAd {
+@Composable
+fun NativeAd(context: Context) {
+    val location = context.getLocation()
+    when(location){
+        RU -> NativeAdApp.Yandex()
+        OTHER -> NativeAdApp.Applovin()
+    }
+}
 
-    object Yandex {
+
+sealed interface NativeAdApp {
+
+    object Yandex :NativeAdApp{
 
         @Composable
         operator fun invoke(viewModel: YandexNativeAdViewModel = viewModel()) {
@@ -80,7 +94,7 @@ sealed interface NativeAd {
 
     }
 
-    object Applovin {
+    object Applovin :NativeAdApp{
 
 
         @Composable
