@@ -1,7 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.detailMod
 
 import android.os.Parcelable
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,13 +22,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +35,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
@@ -100,7 +94,7 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
             }
         }
         state.choiceFilePathSetup?.let {
-            SetupModDialog(it, viewModel::installMod) {
+            SetupModDialog(it, viewModel) {
                 viewModel.changeStageSetupMod(null)
             }
         }
@@ -111,19 +105,6 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
 
 }
 
-@Composable
-private fun MinecraftVersion(state: DetailModState) {
-    state.versionMine?.let {
-        Spacer(Modifier.height(20.dp))
-        Text(
-            text = "Minecraft version: $it",
-            style = Typography.APP_TEXT,
-            fontSize = 18.sp,
-            color = Colors.WHITE,
-            fontFamily = Fonts.SF.SEMI_BOLD,
-        )
-    }
-}
 
 @Composable
 private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
@@ -175,12 +156,10 @@ private fun SupportVersions(state: DetailModState) {
             state.mod.supportVersion.forEach { version ->
                 SupportVersionItem(
                     value = version,
-                    actualVersion = state.versionMine?.let { it.contains(version) } ?: false
                 )
             }
         }
     }
-    MinecraftVersion(state)
 }
 
 @Composable

@@ -1,14 +1,11 @@
 package ru.topbun.minecraft_mods_pe.presentation.theme.components
 
 import android.app.Activity
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Modifier
 import com.applovin.mediation.MaxAd
 import com.applovin.mediation.MaxAdListener
 import com.applovin.mediation.MaxError
@@ -23,12 +20,9 @@ import com.yandex.mobile.ads.interstitial.InterstitialAdLoadListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
 import kotlinx.coroutines.delay
 import ru.topbun.minecraft_mods_pe.BuildConfig
-import ru.topbun.minecraft_mods_pe.utills.LocationAd.*
+import ru.topbun.minecraft_mods_pe.utills.LocationAd.OTHER
+import ru.topbun.minecraft_mods_pe.utills.LocationAd.RU
 import ru.topbun.minecraft_mods_pe.utills.getLocation
-import java.util.concurrent.TimeUnit
-import kotlin.math.pow
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 @Composable
 fun InterstitialAd(activity: Activity,  onAdLoaded: () -> Unit = {}) {
@@ -161,7 +155,7 @@ sealed interface AppInterstitialAd{
 
             LaunchedEffect(Unit) {
                 interstitialAd.loadAd()
-                delay(10_000)
+                delay(5_000)
                 if (!interstitialAd.isReady) onAdFinished()
             }
 

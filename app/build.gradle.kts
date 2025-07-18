@@ -16,8 +16,8 @@ android {
         applicationId = "com.youlovehamit.survival"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val appKeyMetric = property("metric_key")?.toString() ?: error("Not found appKeyMetric in properties")
@@ -72,7 +72,9 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+    implementation("com.google.android.play:review:2.0.1")
+    implementation("com.google.android.gms:play-services-ads:23.0.0")
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.kotlinx.serialization.json)

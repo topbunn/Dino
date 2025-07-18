@@ -1,6 +1,6 @@
 package ru.topbun.minecraft_mods_pe.presentation.screens.detailMod
 
-import android.content.Context
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.currentOrThrow
 import ru.topbun.domain.utills.copyAssetToDownloads
 import ru.topbun.domain.utills.getModFile
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
@@ -31,10 +32,11 @@ import java.io.File
 @Composable
 fun SetupModDialog(
     assetFilePath: String,
-    installMod: (Context, File) -> Unit,
+    viewModel: DetailModViewModel,
     onDismissDialog: () -> Unit,
 ) {
     val context = LocalContext.current
+    val activity = LocalActivity.currentOrThrow
     var savedFile by rememberSaveable { mutableStateOf<File?>(null) }
     LaunchedEffect(assetFilePath) { savedFile = getModFile(assetFilePath) }
     DialogWrapper(
@@ -60,9 +62,10 @@ fun SetupModDialog(
                 .height(40.dp)
         ) {
             savedFile?.let {
-                installMod(context, it)
+                viewModel.installMod(context, it)
             } ?: run {
                 savedFile = copyAssetToDownloads(context, assetFilePath)
+                viewModel.showInAppReview(activity)
             }
         }
         savedFile?.let {

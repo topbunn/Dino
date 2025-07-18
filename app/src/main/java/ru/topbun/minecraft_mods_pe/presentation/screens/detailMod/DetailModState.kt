@@ -6,5 +6,4 @@ data class DetailModState(
     val mod: ModEntity,
     val choiceFilePathSetup: String? = null,
     val dontWorkAddonDialogIsOpen: Boolean = false,
-    val versionMine: String? = null,
 )
