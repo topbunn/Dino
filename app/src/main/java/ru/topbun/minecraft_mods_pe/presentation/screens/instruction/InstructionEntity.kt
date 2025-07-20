@@ -11,17 +11,17 @@ data class InstructionEntity(
     companion object{
 
         fun getAddonInstruction() = listOf(
-            InstructionEntity(ru.topbun.domain.R.string.instr_addon_1, ru.topbun.domain.R.drawable.instr_addon_1),
-            InstructionEntity(ru.topbun.domain.R.string.instr_addon_2, ru.topbun.domain.R.drawable.instr_addon_2),
-            InstructionEntity(ru.topbun.domain.R.string.instr_addon_3, ru.topbun.domain.R.drawable.instr_addon_3),
-            InstructionEntity(ru.topbun.domain.R.string.instr_addon_4, ru.topbun.domain.R.drawable.instr_addon_4),
+            InstructionEntity(ru.topbun.ui.R.string.instr_addon_1, ru.topbun.ui.R.drawable.instr_addon_1),
+            InstructionEntity(ru.topbun.ui.R.string.instr_addon_2, ru.topbun.ui.R.drawable.instr_addon_2),
+            InstructionEntity(ru.topbun.ui.R.string.instr_addon_3, ru.topbun.ui.R.drawable.instr_addon_3),
+            InstructionEntity(ru.topbun.ui.R.string.instr_addon_4, ru.topbun.ui.R.drawable.instr_addon_4),
         )
 
         fun getWorldInstruction() = listOf(
-            InstructionEntity(ru.topbun.domain.R.string.instr_world_1, ru.topbun.domain.R.drawable.instr_world_1),
-            InstructionEntity(ru.topbun.domain.R.string.instr_world_2, ru.topbun.domain.R.drawable.instr_world_2),
-            InstructionEntity(ru.topbun.domain.R.string.instr_world_3, ru.topbun.domain.R.drawable.instr_world_3),
-            InstructionEntity(ru.topbun.domain.R.string.instr_addon_4, ru.topbun.domain.R.drawable.instr_addon_4),
+            InstructionEntity(ru.topbun.ui.R.string.instr_world_1, ru.topbun.ui.R.drawable.instr_world_1),
+            InstructionEntity(ru.topbun.ui.R.string.instr_world_2, ru.topbun.ui.R.drawable.instr_world_2),
+            InstructionEntity(ru.topbun.ui.R.string.instr_world_3, ru.topbun.ui.R.drawable.instr_world_3),
+            InstructionEntity(ru.topbun.ui.R.string.instr_addon_4, ru.topbun.ui.R.drawable.instr_addon_4),
         )
 
 

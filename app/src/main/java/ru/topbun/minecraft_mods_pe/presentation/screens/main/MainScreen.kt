@@ -28,7 +28,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import ru.topbun.domain.R
+import ru.topbun.ui.R
 import ru.topbun.minecraft_mods_pe.presentation.screens.detailMod.DetailModScreen
 import ru.topbun.minecraft_mods_pe.presentation.screens.favorite.FavoriteScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
@@ -42,7 +42,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickab
 object MainScreen: Tab {
 
     override val options: TabOptions
-    @Composable get() = TabOptions(0U, stringResource(ru.topbun.domain.R.string.tabs_main), painterResource(ru.topbun.domain.R.drawable.ic_tabs_main))
+    @Composable get() = TabOptions(0U, stringResource(ru.topbun.ui.R.string.tabs_main), painterResource(ru.topbun.ui.R.drawable.ic_tabs_main))
 
     @Composable
     override fun Content() {
@@ -126,7 +126,7 @@ private fun TopBar(viewModel: MainViewModel, state: MainState) {
         AppTextField(
             modifier = Modifier.weight(1f),
             value = state.search,
-            placeholder = stringResource(ru.topbun.domain.R.string.search),
+            placeholder = stringResource(ru.topbun.ui.R.string.search),
             onValueChange = { viewModel.changeSearch(it) },
             iconStart = {
                 Icon(

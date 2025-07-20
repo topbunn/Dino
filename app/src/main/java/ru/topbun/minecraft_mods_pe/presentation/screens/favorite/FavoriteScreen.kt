@@ -38,7 +38,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 object FavoriteScreen : Tab {
 
     override val options: TabOptions
-        @Composable get() = TabOptions(0U, stringResource(ru.topbun.domain.R.string.tabs_favorite), painterResource(ru.topbun.domain.R.drawable.ic_tabs_favorite))
+        @Composable get() = TabOptions(0U, stringResource(ru.topbun.ui.R.string.tabs_favorite), painterResource(ru.topbun.ui.R.drawable.ic_tabs_favorite))
 
 
     @Composable
@@ -117,7 +117,7 @@ private fun Header(state: FavoriteState) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(ru.topbun.domain.R.string.favorite, state.mods.count()),
+            text = stringResource(ru.topbun.ui.R.string.favorite, state.mods.count()),
             style = Typography.APP_TEXT,
             fontSize = 22.sp,
             color = Colors.GRAY,

@@ -27,3 +27,7 @@ dependencyResolutionManagement {
 rootProject.name = "Minecraft Mods PE"
 include(":app")
 include(":domain")
+include(":core")
+include(":core:ui")
+include(":core:android")
+include(":data")

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import ru.topbun.domain.R
+import ru.topbun.ui.R
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
@@ -119,7 +119,7 @@ private fun Header() {
             tint = Colors.GREEN
         )
         Text(
-            text = stringResource(ru.topbun.domain.R.string.instructions),
+            text = stringResource(ru.topbun.ui.R.string.instructions),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.GRAY,

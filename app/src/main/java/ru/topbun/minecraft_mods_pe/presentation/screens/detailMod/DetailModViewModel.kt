@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
-import ru.topbun.minecraft_mods_pe.repository.ModRepository
 import java.io.File
 
 class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
@@ -60,7 +60,7 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
         try {
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, context.getString(ru.topbun.domain.R.string.minecraft_is_not_installed), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(ru.topbun.ui.R.string.minecraft_is_not_installed), Toast.LENGTH_LONG).show()
         }
     }
 

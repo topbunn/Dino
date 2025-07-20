@@ -48,7 +48,7 @@ fun ColumnScope.ModsList(mods: List<ModEntity>, content: @Composable (() -> Unit
             item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(ru.topbun.domain.R.string.the_list_is_empty),
+                    text = stringResource(ru.topbun.ui.R.string.the_list_is_empty),
                     style = Typography.APP_TEXT,
                     fontSize = 18.sp,
                     color = Colors.GRAY,

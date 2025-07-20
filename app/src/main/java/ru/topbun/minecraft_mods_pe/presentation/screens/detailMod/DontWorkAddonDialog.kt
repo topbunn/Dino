@@ -32,7 +32,7 @@ fun DontWorkAddonDialog(
         var message by rememberSaveable { mutableStateOf("") }
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(ru.topbun.domain.R.string.describe_your_problem),
+            text = stringResource(ru.topbun.ui.R.string.describe_your_problem),
             style = Typography.APP_TEXT,
             fontSize = 16.sp,
             color = Colors.GRAY,
@@ -47,14 +47,14 @@ fun DontWorkAddonDialog(
             singleLine = false,
             value = message,
             background = Colors.BLACK_BG,
-            placeholder = stringResource(ru.topbun.domain.R.string.type_message),
+            placeholder = stringResource(ru.topbun.ui.R.string.type_message),
             onValueChange = {message = it}
         )
         Spacer(Modifier.height(16.dp))
 
-        val messageIsSent = stringResource(ru.topbun.domain.R.string.message_is_sent)
+        val messageIsSent = stringResource(ru.topbun.ui.R.string.message_is_sent)
         AppButton(
-            text = stringResource(ru.topbun.domain.R.string.send),
+            text = stringResource(ru.topbun.ui.R.string.send),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)

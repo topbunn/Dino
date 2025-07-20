@@ -20,8 +20,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.currentOrThrow
-import ru.topbun.domain.utills.copyAssetToDownloads
-import ru.topbun.domain.utills.getModFile
+import ru.topbun.android.utills.copyAssetToDownloads
+import ru.topbun.android.utills.getModFile
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
 import ru.topbun.minecraft_mods_pe.presentation.theme.Typography
@@ -45,7 +45,7 @@ fun SetupModDialog(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(
-                if (savedFile != null) ru.topbun.domain.R.string.to_install_in_game_click_the_install else ru.topbun.domain.R.string.to_save_click_the_download_button
+                if (savedFile != null) ru.topbun.ui.R.string.to_install_in_game_click_the_install else ru.topbun.ui.R.string.to_save_click_the_download_button
             ),
             style = Typography.APP_TEXT,
             fontSize = 16.sp,
@@ -55,7 +55,7 @@ fun SetupModDialog(
         Spacer(Modifier.height(16.dp))
         AppButton(
             text = stringResource(
-                if (savedFile != null) ru.topbun.domain.R.string.install else ru.topbun.domain.R.string.download
+                if (savedFile != null) ru.topbun.ui.R.string.install else ru.topbun.ui.R.string.download
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,7 +73,7 @@ fun SetupModDialog(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = buildAnnotatedString {
-                    append(stringResource(ru.topbun.domain.R.string.the_file_is_saved_the_path))
+                    append(stringResource(ru.topbun.ui.R.string.the_file_is_saved_the_path))
                     withStyle(SpanStyle(color = Colors.RED)) {
                         append(it.path)
                     }

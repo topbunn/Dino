@@ -20,9 +20,9 @@ import com.yandex.mobile.ads.interstitial.InterstitialAdLoadListener
 import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
 import kotlinx.coroutines.delay
 import ru.topbun.minecraft_mods_pe.BuildConfig
-import ru.topbun.minecraft_mods_pe.utills.LocationAd.OTHER
-import ru.topbun.minecraft_mods_pe.utills.LocationAd.RU
-import ru.topbun.minecraft_mods_pe.utills.getLocation
+import ru.topbun.android.utills.LocationAd.OTHER
+import ru.topbun.android.utills.LocationAd.RU
+import ru.topbun.android.utills.getLocation
 
 @Composable
 fun InterstitialAd(activity: Activity,  onAdLoaded: () -> Unit = {}) {

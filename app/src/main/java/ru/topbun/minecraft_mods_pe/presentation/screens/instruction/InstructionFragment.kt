@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import ru.topbun.domain.R
+import ru.topbun.ui.R
 import ru.topbun.minecraft_mods_pe.presentation.screens.instruction.InstructionType.*
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
 import ru.topbun.minecraft_mods_pe.presentation.theme.Fonts
@@ -116,8 +116,8 @@ private fun Header(type: InstructionType) {
             tint = Colors.GREEN
         )
         val titleRes = when(type){
-            ADDON -> ru.topbun.domain.R.string.installing_addons_and_textures
-            WORLD -> ru.topbun.domain.R.string.installation_of_worlds
+            ADDON -> ru.topbun.ui.R.string.installing_addons_and_textures
+            WORLD -> ru.topbun.ui.R.string.installation_of_worlds
         }
         Text(
             text = stringResource(titleRes),

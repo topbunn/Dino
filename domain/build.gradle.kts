@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.serialization)
-    alias(libs.plugins.ksp)
-    id("androidx.room")
     id("kotlin-parcelize")
 }
 
@@ -34,14 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    room {
-        schemaDirectory("$projectDir/schemas")
-    }
 }
 
 dependencies {
 
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
     implementation(libs.kotlinx.serialization.json)
+    implementation(project(":core:ui"))
 }

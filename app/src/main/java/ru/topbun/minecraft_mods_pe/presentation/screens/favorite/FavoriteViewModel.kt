@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
-import ru.topbun.minecraft_mods_pe.repository.ModRepository
 
 class FavoriteViewModel(application: Application): AndroidViewModel(application) {
 

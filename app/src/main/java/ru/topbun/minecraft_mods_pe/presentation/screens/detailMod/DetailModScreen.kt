@@ -40,7 +40,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
-import ru.topbun.domain.R
+import ru.topbun.ui.R
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.minecraft_mods_pe.presentation.screens.instruction.InstructionScreen
 import ru.topbun.minecraft_mods_pe.presentation.theme.Colors
@@ -50,7 +50,7 @@ import ru.topbun.minecraft_mods_pe.presentation.theme.components.AppButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.IconWithButton
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.NativeAd
 import ru.topbun.minecraft_mods_pe.presentation.theme.components.noRippleClickable
-import ru.topbun.minecraft_mods_pe.utills.getImageWithNameFile
+import ru.topbun.ui.utils.getImageWithNameFile
 
 @Parcelize
 data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
@@ -127,7 +127,7 @@ private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp),
-            text = stringResource(ru.topbun.domain.R.string.addon_don_t_work),
+            text = stringResource(ru.topbun.ui.R.string.addon_don_t_work),
             contentColor = Colors.WHITE,
             containerColor = Color(0xffE03131),
         ) {
@@ -143,7 +143,7 @@ private fun SupportVersions(state: DetailModState) {
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
-            text = stringResource(ru.topbun.domain.R.string.supported_versions),
+            text = stringResource(ru.topbun.ui.R.string.supported_versions),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.WHITE,
@@ -218,7 +218,7 @@ private fun Preview(mod: ModEntity) {
 @Composable
 private fun ButtonInstruction(navigator: Navigator) {
     AppButton(
-        text = stringResource(ru.topbun.domain.R.string.instructions),
+        text = stringResource(ru.topbun.ui.R.string.instructions),
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
@@ -247,7 +247,7 @@ private fun Header(viewModel: DetailModViewModel, state: DetailModState) {
             tint = Colors.GREEN
         )
         Text(
-            text = stringResource(ru.topbun.domain.R.string.installation),
+            text = stringResource(ru.topbun.ui.R.string.installation),
             style = Typography.APP_TEXT,
             fontSize = 18.sp,
             color = Colors.GRAY,

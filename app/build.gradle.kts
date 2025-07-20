@@ -2,10 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     id("kotlin-parcelize")
-    id("androidx.room")
 }
 
 android {
@@ -65,16 +63,14 @@ android {
         compose = true
         buildConfig = true
     }
-    room {
-        schemaDirectory("$projectDir/schemas")
-    }
 
 }
 
 dependencies {
-    implementation("com.google.android.play:app-update-ktx:2.1.0")
-    implementation("com.google.android.play:review:2.0.1")
-    implementation("com.google.android.gms:play-services-ads:23.0.0")
+
+    implementation(libs.app.update.ktx)
+    implementation(libs.review)
+    implementation(libs.play.services.ads)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.kotlinx.serialization.json)
@@ -87,11 +83,6 @@ dependencies {
     implementation(libs.facebook.adapter)
     implementation(libs.mintegral.adapter)
 
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.lifecycle.process)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
 
     // Voyager
     implementation(libs.voyager.navigator)
@@ -117,7 +108,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(project(":domain"))
-    
+    implementation(project(":core:ui"))
+    implementation(project(":core:android"))
+    implementation(project(":data"))
+
 }
 
 configurations.all {

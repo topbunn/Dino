@@ -53,7 +53,7 @@ object SplashScreen: Screen {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(ru.topbun.domain.R.string.app_name),
+                text = stringResource(ru.topbun.ui.R.string.app_name),
                 style = APP_TEXT,
                 fontSize = 32.sp,
                 fontFamily = Fonts.SF.BOLD,

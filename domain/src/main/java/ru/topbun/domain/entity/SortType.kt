@@ -1,6 +1,6 @@
 package ru.topbun.domain.entity
 
-import ru.topbun.domain.R
+import ru.topbun.ui.R
 
 enum class SortType(val titleRes: Int) {
 

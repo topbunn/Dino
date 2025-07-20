@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.domain.entity.ModType
@@ -21,7 +22,6 @@ import ru.topbun.domain.entity.SortType.TEXTURE
 import ru.topbun.minecraft_mods_pe.presentation.screens.main.ModSortEnum.ALL
 import ru.topbun.minecraft_mods_pe.presentation.screens.main.ModSortEnum.BEST
 import ru.topbun.minecraft_mods_pe.presentation.screens.main.ModSortEnum.NEW
-import ru.topbun.minecraft_mods_pe.repository.ModRepository
 
 class MainViewModel(application: Application) : AndroidViewModel(application)  {
 

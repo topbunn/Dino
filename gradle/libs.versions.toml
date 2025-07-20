@@ -1,6 +1,7 @@
 [versions]
 analytics = "7.2.0"
 applovinSdk = "13.3.1"
+appUpdateKtx = "2.1.0"
 facebookAdapter = "6.20.0.0"
 googleAdapter = "24.4.0.0"
 lifecycleViewmodelCompose = "2.9.1"
@@ -17,6 +18,8 @@ kotlinxSerializationJson = "1.9.0"
 lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
 composeBom = "2025.06.01"
+playServicesAds = "23.0.0"
+review = "2.0.1"
 roomRuntime = "2.7.2"
 voyagerVersion = "1.1.0-beta03"
 ksp = "2.2.0-2.0.2"
@@ -24,6 +27,7 @@ serialization = "2.2.0"
 appcompat = "1.7.1"
 material = "1.12.0"
 lifecycleProcess = "2.9.1"
+jetbrainsKotlinJvm = "2.2.0"
 
 [libraries]
 analytics = { module = "io.appmetrica.analytics:analytics", version.ref = "analytics" }
@@ -33,6 +37,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 applovin-sdk = { module = "com.applovin:applovin-sdk", version.ref = "applovinSdk" }
 facebook-adapter = { module = "com.applovin.mediation:facebook-adapter", version.ref = "facebookAdapter" }
 google-adapter = { module = "com.applovin.mediation:google-adapter", version.ref = "googleAdapter" }
@@ -52,6 +57,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 mintegral-adapter = { module = "com.applovin.mediation:mintegral-adapter", version.ref = "mintegralAdapter" }
 mobileads-yandex = { module = "com.yandex.android:mobileads", version.ref = "mobileads" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+review = { module = "com.google.android.play:review", version.ref = "review" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerVersion" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyagerVersion" }
 voyager-tab = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyagerVersion" }
@@ -68,5 +75,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 

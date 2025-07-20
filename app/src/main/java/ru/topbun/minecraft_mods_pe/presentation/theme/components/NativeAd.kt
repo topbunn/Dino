@@ -20,9 +20,9 @@ import com.yandex.mobile.ads.nativeads.NativeAdViewBinder
 import ru.topbun.minecraft_mods_pe.R
 import ru.topbun.minecraft_mods_pe.presentation.ApplovinNativeAdViewModel
 import ru.topbun.minecraft_mods_pe.presentation.YandexNativeAdViewModel
-import ru.topbun.minecraft_mods_pe.utills.LocationAd.OTHER
-import ru.topbun.minecraft_mods_pe.utills.LocationAd.RU
-import ru.topbun.minecraft_mods_pe.utills.getLocation
+import ru.topbun.android.utills.LocationAd.OTHER
+import ru.topbun.android.utills.LocationAd.RU
+import ru.topbun.android.utills.getLocation
 
 @Composable
 fun NativeAd(context: Context) {
