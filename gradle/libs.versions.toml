@@ -1,7 +1,10 @@
 [versions]
 analytics = "7.2.0"
 applovinSdk = "13.3.1"
+facebookAdapter = "6.20.0.0"
+googleAdapter = "24.4.0.0"
 lifecycleViewmodelCompose = "2.9.1"
+mintegralAdapter = "16.9.81.0"
 mobileads = "7.14.1"
 accompanistSystemuicontroller = "0.36.0"
 agp = "8.11.1"
@@ -31,6 +34,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 applovin-sdk = { module = "com.applovin:applovin-sdk", version.ref = "applovinSdk" }
+facebook-adapter = { module = "com.applovin.mediation:facebook-adapter", version.ref = "facebookAdapter" }
+google-adapter = { module = "com.applovin.mediation:google-adapter", version.ref = "googleAdapter" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -45,6 +50,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+mintegral-adapter = { module = "com.applovin.mediation:mintegral-adapter", version.ref = "mintegralAdapter" }
 mobileads-yandex = { module = "com.yandex.android:mobileads", version.ref = "mobileads" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerVersion" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyagerVersion" }

@@ -83,6 +83,9 @@ dependencies {
     implementation (libs.mobileads.yandex)
     implementation(libs.applovin.sdk)
     implementation(libs.analytics)
+    implementation(libs.google.adapter)
+    implementation(libs.facebook.adapter)
+    implementation(libs.mintegral.adapter)
 
     // Room
     implementation(libs.androidx.room.runtime)
