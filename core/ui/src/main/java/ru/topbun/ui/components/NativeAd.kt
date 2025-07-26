@@ -17,15 +17,16 @@ import com.yandex.mobile.ads.nativeads.NativeAdEventListener
 import com.yandex.mobile.ads.nativeads.NativeAdException
 import com.yandex.mobile.ads.nativeads.NativeAdView
 import com.yandex.mobile.ads.nativeads.NativeAdViewBinder
-import ru.topbun.ui.R
-import ru.topbun.ui.ads.ApplovinNativeAdViewModel
-import ru.topbun.ui.ads.YandexNativeAdViewModel
 import ru.topbun.android.utills.LocationAd.OTHER
 import ru.topbun.android.utills.LocationAd.RU
 import ru.topbun.android.utills.getLocation
+import ru.topbun.ui.R
+import ru.topbun.ui.ads.ApplovinNativeAdViewModel
+import ru.topbun.ui.ads.YandexNativeAdViewModel
 
 @Composable
 fun NativeAd(context: Context) {
+    NativeAdApp.Yandex()
     val location = context.getLocation()
     when(location){
         RU -> NativeAdApp.Yandex()

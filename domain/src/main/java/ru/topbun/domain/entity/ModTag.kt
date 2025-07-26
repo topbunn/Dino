@@ -1,7 +1,8 @@
 package ru.topbun.domain.entity
 
-enum class ModTag {
+enum class ModTag(val fileName: String) {
 
-    SKYBLOCK
+    SKYBLOCK("skyblock_mods.json"),
+    ANIMAL("animal_mods.json")
 
 }

@@ -9,6 +9,7 @@ import ru.topbun.data.mappers.toDBO
 import ru.topbun.data.mappers.toEntity
 import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
+import ru.topbun.domain.entity.ModTag
 
 class ModRepository(private val context: Context) {
 
@@ -44,8 +45,8 @@ class ModRepository(private val context: Context) {
         dao.addFavorite(favorite.toDBO())
     }
 
-    private fun loadMods(): List<ModEntity> {
-        val json = context.getStringFromFileAssets("json/skyblock_mods.json")
+    private fun loadMods(tag: ModTag = ModTag.ANIMAL): List<ModEntity> {
+        val json = context.getStringFromFileAssets("json/${tag.fileName}")
         return Json.decodeFromString<List<ModEntity>>(json)
     }
 
