@@ -2,6 +2,7 @@
 analytics = "7.2.0"
 applovinSdk = "13.3.1"
 appUpdateKtx = "2.1.0"
+coilCompose = "3.3.0"
 facebookAdapter = "6.20.0.0"
 googleAdapter = "24.4.0.0"
 lifecycleViewmodelCompose = "2.9.1"
@@ -39,6 +40,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 applovin-sdk = { module = "com.applovin:applovin-sdk", version.ref = "applovinSdk" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 facebook-adapter = { module = "com.applovin.mediation:facebook-adapter", version.ref = "facebookAdapter" }
 google-adapter = { module = "com.applovin.mediation:google-adapter", version.ref = "googleAdapter" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

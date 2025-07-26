@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.topbun.ui.theme.Colors
@@ -44,7 +45,9 @@ fun AppButton(
                 text = text,
                 style = APP_TEXT,
                 fontSize = 16.sp,
-                color = contentColor
+                color = contentColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
 

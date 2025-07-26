@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -112,7 +113,7 @@ private fun Header(type: InstructionType) {
                 .noRippleClickable { navigator.pop() },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = "button back",
-            tint = Colors.GREEN
+            tint = MaterialTheme.colorScheme.primary
         )
         val titleRes = when(type){
             InstructionType.ADDON -> R.string.installing_addons_and_textures

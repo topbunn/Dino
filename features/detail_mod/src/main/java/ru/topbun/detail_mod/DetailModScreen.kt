@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -118,8 +119,8 @@ private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
                     .fillMaxWidth()
                     .height(48.dp),
                 text = it,
-                contentColor = Color(0xff4AD858),
-                containerColor = Colors.GREEN_BG,
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primary.copy(0.4f),
             ) {
                 viewModel.changeStageSetupMod(it)
             }
@@ -167,7 +168,7 @@ private fun SupportVersions(state: DetailModState) {
 private fun SupportVersionItem(value: String, actualVersion: Boolean = false) {
     Text(
         modifier = Modifier
-            .background(if (actualVersion) Colors.GREEN else Colors.WHITE, RoundedCornerShape(6.dp))
+            .background(if (actualVersion) MaterialTheme.colorScheme.primary else Colors.WHITE, RoundedCornerShape(6.dp))
             .padding(horizontal = 10.dp, vertical = 6.dp),
         text = value,
         style = Typography.APP_TEXT,
@@ -246,7 +247,7 @@ private fun Header(viewModel: DetailModViewModel, state: DetailModState) {
                 .noRippleClickable { navigator.pop() },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = "button back",
-            tint = Colors.GREEN
+            tint = MaterialTheme.colorScheme.primary
         )
         Text(
             text = stringResource(R.string.installation),

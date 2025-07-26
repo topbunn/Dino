@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Survival Моды для MCPE</string>
+    <string name="app_name_skyblock">Survival Моды для MCPE</string>
+    <string name="app_name_animal">Моды животных для MCPE</string>
+    <string name="app_name_zombie">Моды зомби для MCPE</string>
+    <string name="app_name_texture">Моды текстур для MCPE</string>
+    <string name="app_name_dino">Моды динозавров для MCPE</string>
 
     <string name="search">Поиск</string>
 

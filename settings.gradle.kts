@@ -25,14 +25,13 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Minecraft Mods PE"
-include(":app")
+include(":app_skyblock")
 include(":domain")
 include(":core")
 include(":core:ui")
 include(":core:android")
 include(":data")
 include(":features")
-include(":core:common")
 include(":navigation")
 include(":features:main")
 include(":features:splash")
@@ -41,3 +40,8 @@ include(":features:favorite")
 include(":features:feedback")
 include(":features:instruction")
 include(":features:tabs")
+
+include(":app_dino")
+include(":app_zombie")
+include(":app_texture")
+include(":app_animal")

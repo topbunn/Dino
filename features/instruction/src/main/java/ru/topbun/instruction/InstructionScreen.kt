@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -74,7 +75,7 @@ private fun ButtonInstruction(text: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Colors.GREEN, RoundedCornerShape(6.dp))
+            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(6.dp))
             .clickable { onClick() }
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -116,7 +117,7 @@ private fun Header() {
                 .noRippleClickable { navigator.pop() },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = "button back",
-            tint = Colors.GREEN
+            tint = MaterialTheme.colorScheme.primary
         )
         Text(
             text = stringResource(R.string.instructions),

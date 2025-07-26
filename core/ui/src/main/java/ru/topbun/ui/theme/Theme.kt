@@ -4,6 +4,6 @@ import androidx.compose.material3.lightColorScheme
 
 val colorScheme = lightColorScheme(
     background = Colors.BLACK_BG,
-    primary = Colors.GREEN,
-    secondary = Colors.GREEN,
+    primary = Colors.PRIMARY,
+    secondary = Colors.PRIMARY,
 )

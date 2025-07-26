@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mods Survival pour MCPE</string>
+    <string name="app_name_skyblock">Mods Survival pour MCPE</string>
+    <string name="app_name_animal">Mods d\'Animaux pour MCPE</string>
+    <string name="app_name_zombie">Mods de Zombies pour MCPE</string>
+    <string name="app_name_texture">Mods de Textures pour MCPE</string>
+    <string name="app_name_dino">Mods de Dinosaures pour MCPE</string>
 
     <string name="search">Recherche</string>
 

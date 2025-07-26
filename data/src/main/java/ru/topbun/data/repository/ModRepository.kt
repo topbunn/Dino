@@ -45,7 +45,7 @@ class ModRepository(private val context: Context) {
         dao.addFavorite(favorite.toDBO())
     }
 
-    private fun loadMods(tag: ModTag = ModTag.ANIMAL): List<ModEntity> {
+    private fun loadMods(tag: ModTag = ModTag.ZOMBIE): List<ModEntity> {
         val json = context.getStringFromFileAssets("json/${tag.fileName}")
         return Json.decodeFromString<List<ModEntity>>(json)
     }

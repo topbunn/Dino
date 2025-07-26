@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation(libs.coil.compose)
     implementation(libs.voyager.tab)
     implementation(libs.voyager.navigator)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

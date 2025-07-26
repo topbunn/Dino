@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MCPE용 스카이블록 모드</string>
+    <string name="app_name_skyblock">MCPE용 스카이블록 모드</string>
+    <string name="app_name_animal">MCPE용 동물 모드</string>
+    <string name="app_name_zombie">MCPE용 좀비 모드</string>
+    <string name="app_name_texture">MCPE용 텍스처 모드</string>
+    <string name="app_name_dino">MCPE용 공룡 모드</string>
 
     <string name="search">검색</string>
 

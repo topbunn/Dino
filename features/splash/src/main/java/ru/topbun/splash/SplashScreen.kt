@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,7 +32,7 @@ import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.Tab
+import coil3.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.delay
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.components.InterstitialAd
@@ -52,8 +53,11 @@ object SplashScreen: Screen {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Companion.CenterHorizontally
         ) {
+            val context = LocalContext.current
+            val applicationName = context.applicationInfo.labelRes
+            val applicationImage = context.applicationInfo.icon
             Text(
-                text = stringResource(ru.topbun.ui.R.string.app_name),
+                text = stringResource(applicationName),
                 style = Typography.APP_TEXT,
                 fontSize = 32.sp,
                 fontFamily = Fonts.SF.BOLD,
@@ -62,7 +66,7 @@ object SplashScreen: Screen {
             Spacer(Modifier.Companion.height(30.dp))
             Image(
                 modifier = Modifier.Companion.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
-                painter = painterResource(ru.topbun.ui.R.drawable.logo),
+                painter = rememberAsyncImagePainter(applicationImage),
                 contentDescription = "Image preview",
                 contentScale = ContentScale.Companion.FillWidth
             )

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MCPEのためのSurvivalモード</string>
+    <string name="app_name_skyblock">MCPEのためのSurvivalモード</string>
+    <string name="app_name_animal">MCPE用動物モッド</string>
+    <string name="app_name_zombie">MCPE用ゾンビモッド</string>
+    <string name="app_name_texture">MCPE用テクスチャモッド</string>
+    <string name="app_name_dino">MCPE用恐竜モッド</string>
 
     <string name="search">検索</string>
 

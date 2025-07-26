@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.voyager.tab)
     implementation(libs.voyager.transitions)
 
+    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -81,5 +82,6 @@ dependencies {
 
     implementation(project(":core:android"))
     implementation(project(":domain"))
+    implementation(project(":navigation"))
 
 }

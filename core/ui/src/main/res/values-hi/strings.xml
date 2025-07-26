@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MCPE के लिए Survival मोड</string>
+    <string name="app_name_skyblock">MCPE के लिए Survival मोड</string>
+    <string name="app_name_animal">MCPE के लिए जानवर मोड</string>
+    <string name="app_name_zombie">MCPE के लिए ज़ोंबी मोड</string>
+    <string name="app_name_texture">MCPE के लिए टेक्सचर मोड</string>
+    <string name="app_name_dino">MCPE के लिए डायनासोर मोड</string>
 
     <string name="search">खोजें</string>
 

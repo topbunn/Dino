@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -39,7 +40,7 @@ fun RowScope.BottomNavigationItem(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val color = if(selected) Color(0xff40B24B) else Colors.WHITE.copy(0.5f)
+        val color = if(selected) MaterialTheme.colorScheme.primary else Colors.WHITE.copy(0.5f)
         tab.options.icon?.let {
             Icon(
                 modifier = Modifier.size(24.dp),

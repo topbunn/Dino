@@ -75,7 +75,7 @@ fun SetupModDialog(
                 modifier = Modifier.fillMaxWidth(),
                 text = buildAnnotatedString {
                     append(stringResource(R.string.the_file_is_saved_the_path))
-                    withStyle(SpanStyle(color = Colors.RED)) {
+                    withStyle(SpanStyle(color = Colors.BUTTON_RED)) {
                         append(it.path)
                     }
                 },

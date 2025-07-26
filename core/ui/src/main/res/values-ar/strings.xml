@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Survival مودات لـ MCPE</string>
+    <string name="app_name_skyblock">Survival مودات لـ MCPE</string>
+    <string name="app_name_animal">تعديلات الحيوانات لماين كرافت PE</string>
+    <string name="app_name_zombie">تعديلات الزومبي لماين كраفت PE</string>
+    <string name="app_name_texture">تعديلات القوام لماين كرافت PE</string>
+    <string name="app_name_dino">تعديلات الديناصورات لماين كرافت PE</string>
 
     <string name="search">بحث</string>
 
