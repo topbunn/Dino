@@ -1,53 +1,62 @@
 package ru.topbun.data.repository
 
 import android.content.Context
-import android.content.pm.PackageManager
-import kotlinx.serialization.json.Json
-import ru.topbun.android.utills.getStringFromFileAssets
+import ru.topbun.data.api.ApiFactory
 import ru.topbun.data.database.AppDatabase
-import ru.topbun.data.mappers.toDBO
-import ru.topbun.data.mappers.toEntity
-import ru.topbun.domain.entity.FavoriteEntity
+import ru.topbun.data.database.entity.FavoriteEntity
+import ru.topbun.data.mappers.ModMapper
+import ru.topbun.domain.entity.IssueEntity
 import ru.topbun.domain.entity.ModEntity
-import ru.topbun.domain.entity.ModTag
+import ru.topbun.domain.entity.ModSortType
+import ru.topbun.domain.entity.ModType
 
-class ModRepository(private val context: Context) {
+class ModRepository(context: Context) {
 
-    private val dao = AppDatabase.getInstance(context).favoriteDao()
+    private val favoriteDao = AppDatabase.getInstance(context).favoriteDao()
+    private val api = ApiFactory.api
+    private val modMapper = ModMapper(context)
 
-    suspend fun getMods(): List<ModEntity> {
-        val mods = loadMods()
-        val favorites = dao.getFavorites()
-        return mods.map { mod ->
-            val favorite = favorites.firstOrNull { it.modId == mod.id }?.status == true
-            mod.copy(isFavorite = favorite)
+    suspend fun getMods(
+        q: String,
+        offset: Int,
+        type: ModType?,
+        sortType: ModSortType,
+    ) = runCatching {
+        val response = api.getMods(
+            q = q,
+            skip = offset,
+            category = type,
+            sortKey = sortType,
+        )
+        modMapper.toEntity(response.mods)
+    }
+
+
+    suspend fun getMod(id: Int) = runCatching {
+        val mod = api.getMod(id)
+        modMapper.toEntity(mod)
+    }
+
+    suspend fun getFavoriteMods() = runCatching {
+        val favoriteIds = favoriteDao.getFavorites().filter { it.status }.map { it.modId }
+        val mods = mutableListOf<ModEntity>()
+        favoriteIds.forEach {
+            try {
+                val mod = api.getMod(it)
+                mods.add(modMapper.toEntity(mod))
+            } catch (_: Exception){}
         }
+       return@runCatching mods
     }
-
-    fun getVersionMinecraft() = try {
-        val packageInfo = context.packageManager.getPackageInfo("com.mojang.minecraftpe", 0)
-        packageInfo.versionName.takeIf { it != "com.mojang.minecraftpe" }
-    } catch (e: PackageManager.NameNotFoundException) {
-        e.printStackTrace()
-        null
-    }
-
-    suspend fun getMod(id: Int): ModEntity {
-        val mod = loadMods().first { it.id == id }
-        val favoriteStatus = dao.getFavorite(id)?.status ?: false
-        return mod.copy(isFavorite = favoriteStatus)
-    }
-
-    suspend fun getFavoriteWithModId(modId: Int) = dao.getFavorite(modId)?.toEntity()
 
 
     suspend fun addFavorite(favorite: FavoriteEntity) {
-        dao.addFavorite(favorite.toDBO())
+       favoriteDao.addFavorite(favorite)
     }
 
-    private fun loadMods(tag: ModTag = ModTag.ZOMBIE): List<ModEntity> {
-        val json = context.getStringFromFileAssets("json/${tag.fileName}")
-        return Json.decodeFromString<List<ModEntity>>(json)
+    suspend fun sendIssue(issue: IssueEntity) = runCatching{
+        api.createIssue(issue = issue)
     }
+
 
 }

@@ -5,6 +5,7 @@ appUpdateKtx = "2.1.0"
 coilCompose = "3.3.0"
 facebookAdapter = "6.20.0.0"
 googleAdapter = "24.4.0.0"
+lifecycleProcessVersion = "2.4.1"
 lifecycleViewmodelCompose = "2.9.1"
 mintegralAdapter = "16.9.81.0"
 mobileads = "7.14.1"
@@ -29,11 +30,19 @@ appcompat = "1.7.1"
 material = "1.12.0"
 lifecycleProcess = "2.9.1"
 jetbrainsKotlinJvm = "2.2.0"
+retrofit = "3.0.0"
+gson = "2.13.2"
+converterGson = "3.0.0"
 
 [libraries]
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
 analytics = { module = "io.appmetrica.analytics:analytics", version.ref = "analytics" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-process-v241 = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycleProcessVersion" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }

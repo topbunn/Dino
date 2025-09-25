@@ -111,7 +111,7 @@ object SplashScreen: Screen {
                 fontFamily = Fonts.SF.MEDIUM,
                 textAlign = TextAlign.Companion.Center
             )
-            InterstitialAd(activity)
+//            InterstitialAd(activity)
         }
     }
 

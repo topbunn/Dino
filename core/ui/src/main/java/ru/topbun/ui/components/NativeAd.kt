@@ -23,14 +23,17 @@ import ru.topbun.android.utills.getLocation
 import ru.topbun.ui.R
 import ru.topbun.ui.ads.ApplovinNativeAdViewModel
 import ru.topbun.ui.ads.YandexNativeAdViewModel
+import kotlin.random.Random
 
 @Composable
 fun NativeAd(context: Context) {
-    NativeAdApp.Yandex()
-    val location = context.getLocation()
-    when(location){
-        RU -> NativeAdApp.Yandex()
-        OTHER -> NativeAdApp.Applovin()
+    val isShowAd = Random.nextInt(0, 10) in (0..6)
+    if(isShowAd){
+        val location = context.getLocation()
+        when(location){
+            RU -> NativeAdApp.Yandex()
+            OTHER -> NativeAdApp.Applovin()
+        }
     }
 }
 

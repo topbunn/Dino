@@ -23,14 +23,19 @@ import ru.topbun.android.utills.LocationAd.OTHER
 import ru.topbun.android.utills.LocationAd.RU
 import ru.topbun.android.utills.getLocation
 import ru.topbun.ui.BuildConfig
+import kotlin.random.Random
 
 @Composable
 fun InterstitialAd(activity: Activity, onAdLoaded: () -> Unit = {}) {
-    AppInterstitialAd.Yandex(activity, onAdLoaded)
-    val location = activity.applicationContext.getLocation()
-    when(location){
-        RU -> AppInterstitialAd.Yandex(activity, onAdLoaded)
-        OTHER -> AppInterstitialAd.Applovin(activity, onAdLoaded)
+    val isShowAd = Random.nextInt(0, 10) in (0..6)
+    if(isShowAd){
+        val location = activity.applicationContext.getLocation()
+        when(location){
+            RU -> AppInterstitialAd.Yandex(activity, onAdLoaded)
+            OTHER -> AppInterstitialAd.Applovin(activity, onAdLoaded)
+        }
+    } else {
+        onAdLoaded()
     }
 }
 

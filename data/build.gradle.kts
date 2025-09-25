@@ -15,6 +15,13 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val baseUrl = property("base_url")?.toString() ?: error("Not found base_url in properties")
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+
+        val appId = property("app_id")?.toString() ?: error("Not found app_id in properties")
+        buildConfigField("Integer", "APP_ID", appId)
+
     }
 
     buildTypes {
@@ -36,11 +43,17 @@ android {
     room {
         schemaDirectory("$projectDir/schemas")
     }
+    buildFeatures{
+        buildConfig = true
+    }
 }
 
 dependencies {
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // Room
     implementation(libs.androidx.room.runtime)

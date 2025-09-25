@@ -24,8 +24,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Minecraft Mods PE"
-include(":app_skyblock")
+rootProject.name = "Dino Mods"
+include(":app_dino")
 include(":domain")
 include(":core")
 include(":core:ui")
@@ -41,7 +41,3 @@ include(":features:feedback")
 include(":features:instruction")
 include(":features:tabs")
 
-include(":app_dino")
-include(":app_zombie")
-include(":app_texture")
-include(":app_animal")

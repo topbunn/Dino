@@ -2,9 +2,8 @@ package ru.topbun.domain.entity
 
 enum class ModType {
 
-    MAPS,
+    WORLD,
     ADDON,
-    TEXTURE,
-    SKINS,
-
+    TEXTURE_PACK,
+    SKIN_PACK;
 }

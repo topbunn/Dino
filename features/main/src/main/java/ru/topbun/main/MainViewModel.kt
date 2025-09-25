@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.topbun.data.repository.ModRepository
-import ru.topbun.domain.entity.FavoriteEntity
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.domain.entity.ModType
 import ru.topbun.main.ModSortEnum.ALL
@@ -42,9 +41,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
             when(sortType){
                 SortType.ALL -> true
                 SortType.ADDON -> it.type.contains(ModType.ADDON)
-                SortType.MAPS -> it.type.contains(ModType.MAPS)
-                SortType.TEXTURE -> it.type.contains(ModType.TEXTURE)
-                SortType.SKINS -> it.type.contains(ModType.SKINS)
+                SortType.MAPS -> it.type.contains(ModType.WORLD)
+                SortType.TEXTURE -> it.type.contains(ModType.TEXTURE_PACK)
+                SortType.SKINS -> it.type.contains(ModType.SKIN_PACK)
             }
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, state.value.mods)

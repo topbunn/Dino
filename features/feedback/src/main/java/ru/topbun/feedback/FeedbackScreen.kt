@@ -1,5 +1,7 @@
 package ru.topbun.feedback
 
+import android.R.attr.name
+import android.R.id.message
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
@@ -56,13 +61,22 @@ object FeedbackScreen: Tab, Screen {
                 .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 50.dp)
         ) {
             val context = LocalContext.current
+            val viewModel = viewModel<FeedbackViewModel>()
+            val state by viewModel.state.collectAsState()
             val messageSent = stringResource(R.string.message_is_sent)
-            var name by rememberSaveable { mutableStateOf("") }
-            var email by rememberSaveable { mutableStateOf("") }
-            var message by rememberSaveable { mutableStateOf("") }
-            val buttonEnabled by remember {
-                derivedStateOf { listOf(name, email, message).all { it.isNotEmpty() } }
+
+            LaunchedEffect(state.feedbackState) {
+                when(val feedbackState = state.feedbackState){
+                     is FeedbackState.FeedbackScreenState.Error -> {
+                        Toast.makeText(context, feedbackState.message, Toast.LENGTH_SHORT).show()
+                    }
+                    FeedbackState.FeedbackScreenState.Success -> {
+                        Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
             }
+
             Text(
                 modifier = Modifier.Companion.fillMaxWidth(),
                 text = stringResource(R.string.contact_us),
@@ -84,15 +98,9 @@ object FeedbackScreen: Tab, Screen {
             )
             Spacer(Modifier.Companion.height(30.dp))
             AppTextField(
-                value = name,
-                placeholder = stringResource(R.string.name),
-                onValueChange = { name = it }
-            )
-            Spacer(Modifier.Companion.height(10.dp))
-            AppTextField(
-                value = email,
+                value = state.email,
                 placeholder = stringResource(R.string.email),
-                onValueChange = { email = it }
+                onValueChange = { viewModel.changeEmail(it) }
             )
             Spacer(Modifier.Companion.height(10.dp))
             AppTextField(
@@ -101,11 +109,12 @@ object FeedbackScreen: Tab, Screen {
                     .height(150.dp),
                 alignment = Alignment.Companion.Top,
                 singleLine = false,
-                value = message,
+                value = state.message,
                 placeholder = stringResource(R.string.type_message),
-                onValueChange = { message = it }
+                onValueChange = { if (it.length < 1024) viewModel.changeMessage(it) }
             )
             Spacer(Modifier.Companion.height(20.dp))
+            val buttonEnabled by viewModel.buttonEnabled.collectAsState()
             AppButton(
                 modifier = Modifier.Companion
                     .fillMaxWidth()
@@ -113,10 +122,7 @@ object FeedbackScreen: Tab, Screen {
                 enabled = buttonEnabled,
                 text = stringResource(R.string.send)
             ) {
-                name = ""
-                email = ""
-                message = ""
-                Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
+                viewModel.sendIssue()
             }
             Spacer(Modifier.Companion.height(20.dp))
             NativeAd(context)

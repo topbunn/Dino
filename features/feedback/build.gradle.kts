@@ -56,4 +56,5 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":core:ui"))
+    implementation(project(":core:android"))
 }

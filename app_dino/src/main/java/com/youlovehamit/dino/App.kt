@@ -6,6 +6,8 @@ import com.applovin.sdk.AppLovinMediationProvider
 import com.applovin.sdk.AppLovinPrivacySettings
 import com.applovin.sdk.AppLovinSdk
 import com.applovin.sdk.AppLovinSdkInitializationConfiguration
+import com.yandex.mobile.ads.common.MobileAds
+import com.yandex.mobile.ads.instream.MobileInstreamAds
 import io.appmetrica.analytics.AppMetrica
 import io.appmetrica.analytics.AppMetricaConfig
 import ru.topbun.detail_mod.DetailModScreen
@@ -14,7 +16,6 @@ import ru.topbun.feedback.FeedbackScreen
 import ru.topbun.instruction.InstructionScreen
 import ru.topbun.main.MainScreen
 import ru.topbun.navigation.SharedScreen
-import ru.topbun.splash.SplashScreen
 import ru.topbun.tabs.TabsScreen
 
 class App: Application() {
@@ -22,8 +23,14 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         connectMetrics()
-        initAppLovin()
         initSharedScreens()
+        initYandex()
+        initAppLovin()
+    }
+
+    private fun initYandex() {
+        MobileInstreamAds.setAdGroupPreloading(true)
+        MobileAds.initialize(this) {}
     }
 
     private fun connectMetrics(){
@@ -52,7 +59,7 @@ class App: Application() {
                 TabsScreen
             }
             register<SharedScreen.SplashScreen> {
-                SplashScreen
+                ru.topbun.splash.SplashScreen
             }
             register<SharedScreen.MainScreen> {
                 MainScreen

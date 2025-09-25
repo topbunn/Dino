@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.topbun.data.database.dao.FavoriteDao
-import ru.topbun.data.database.entity.FavoriteDBO
+import ru.topbun.data.database.entity.FavoriteEntity
 
 @Database(
     entities = [
-        FavoriteDBO::class
+        FavoriteEntity::class
     ], version = 1
 )
 abstract class AppDatabase: RoomDatabase() {
