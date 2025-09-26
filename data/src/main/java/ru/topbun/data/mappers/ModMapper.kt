@@ -23,7 +23,7 @@ class ModMapper(context: Context){
         description = dto.description,
         image = dto.image,
         files = dto.files,
-        versions = dto.versions,
+        versions = dto.versions.map { it.version },
         isFavorite = dao.getFavorite(dto.id)?.status ?: false
     )
 

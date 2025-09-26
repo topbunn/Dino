@@ -6,11 +6,11 @@ data class FeedbackState(
     val feedbackState: FeedbackScreenState = FeedbackScreenState.Idle
 ){
 
-    sealed class FeedbackScreenState(){
-        object Idle: FeedbackScreenState()
-        object Loading: FeedbackScreenState()
-        object Success: FeedbackScreenState()
-        class Error(val message: String): FeedbackScreenState()
+    sealed interface FeedbackScreenState{
+        object Idle: FeedbackScreenState
+        object Loading: FeedbackScreenState
+        object Success: FeedbackScreenState
+        class Error(val message: String): FeedbackScreenState
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.topbun.main
 
+import android.widget.Toast
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,6 +31,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import ru.topbun.main.MainState.MainScreenState.Error
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.R
 import ru.topbun.ui.theme.Colors
@@ -57,7 +59,13 @@ object MainScreen: Tab, Screen {
             val parentNavigator = LocalNavigator.currentOrThrow.parent
             val viewModel = viewModel<MainViewModel>()
             val state by viewModel.state.collectAsState()
-            val mods by viewModel.mods.collectAsState()
+
+            LaunchedEffect(state.mainScreenState) {
+                if(state.mainScreenState is Error){
+                    Toast.makeText(activity.applicationContext, (state.mainScreenState as Error).message, Toast.LENGTH_SHORT).show()
+                }
+            }
+
             TopBar(viewModel, state)
             Spacer(Modifier.height(20.dp))
             SortBar(viewModel, state)
@@ -68,7 +76,9 @@ object MainScreen: Tab, Screen {
                 .background(Color(0xff464646))
             )
             ModsList(
-                mods = mods,
+                mods = state.mods,
+                isError = state.mainScreenState is Error,
+                onClickRetryLoad = { viewModel.loadMods() },
                 onClickFavorite = { viewModel.changeFavorite(it) },
                 onClickMod = {
                     viewModel.changeOpenMod(it)
@@ -93,7 +103,7 @@ object MainScreen: Tab, Screen {
 
 @Composable
 private fun SortBar(viewModel: MainViewModel, state: MainState) {
-    val mapSortWithTitle = state.sortTypes.map{
+    val mapSortWithTitle = state.modTypeUis.map{
         it to stringResource(it.titleRes)
     }
     Row(
@@ -102,14 +112,14 @@ private fun SortBar(viewModel: MainViewModel, state: MainState) {
     ) {
         TabRow(
             modifier = Modifier.weight(1f),
-            items = state.modSorts.map { stringResource(it.textRes) },
+            items = state.modSorts.map { stringResource(it.stringRes) },
             selectedIndex = state.modSortSelectedIndex
         ) {
             viewModel.changeModSort(it)
         }
         AppDropDown(
-            value = stringResource(state.selectedSortType.titleRes),
-            items = state.sortTypes.map { stringResource(it.titleRes) }
+            value = stringResource(state.selectedModTypeUi.titleRes),
+            items = state.modTypeUis.map { stringResource(it.titleRes) }
         ) { title ->
             viewModel.changeSortType(mapSortWithTitle.first { it.second == title }.first)
         }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.database.entity.FavoriteEntity
 import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.ui.R
@@ -36,10 +37,7 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
         request.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val reviewInfo = task.result
-                val flow = manager.launchReviewFlow(activity, reviewInfo)
-                flow.addOnCompleteListener {
-
-                }
+                manager.launchReviewFlow(activity, reviewInfo)
             }
         }
     }
@@ -65,11 +63,13 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
     }
 
     fun changeFavorite() = viewModelScope.launch{
-        val mod = state.value.mod
-        val favorite = repository.getFavoriteWithModId(mod.id) ?: FavoriteEntity(modId = mod.id, status = false)
-        val newFavorite = favorite.copy(status = !favorite.status)
+        val state = state.value
+        val newFavorite = FavoriteEntity(
+            modId = state.mod.id,
+            status = !state.mod.isFavorite
+        )
         repository.addFavorite(newFavorite)
-        val newMod = _state.value.mod.copy(isFavorite = newFavorite.status, countFavorite = if (newFavorite.status) mod.countFavorite + 1 else mod.countFavorite - 1)
+        val newMod = _state.value.mod.copy(isFavorite = newFavorite.status)
         _state.update { it.copy(mod = newMod) }
     }
 

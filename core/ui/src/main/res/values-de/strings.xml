@@ -8,9 +8,10 @@
 
     <string name="search">Suche</string>
 
-    <string name="sort_enum_best">Beste</string>
-    <string name="sort_enum_new">Neu</string>
-    <string name="sort_enum_all">Alle</string>
+    <string name="sort_enum_name">Nach Name</string>
+    <string name="sort_enum_best">Nach Beliebtheit</string>
+    <string name="sort_enum_comment">Nach Kommentaren</string>
+    <string name="sort_enum_rating">Nach Bewertung</string>
 
     <string name="type">Typ</string>
 
@@ -62,4 +63,5 @@
     <string name="describe_your_problem">Beschreibe dein Problem</string>
     <string name="send">Senden</string>
     <string name="the_list_is_empty">Die Liste ist leer :(</string>
+    <string name="retry">Erneut versuchen</string>
 </resources>

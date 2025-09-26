@@ -8,9 +8,10 @@
 
     <string name="search">بحث</string>
 
-    <string name="sort_enum_best">الأفضل</string>
-    <string name="sort_enum_new">الأحدث</string>
-    <string name="sort_enum_all">الكل</string>
+    <string name="sort_enum_name">بالاسم</string>
+    <string name="sort_enum_best">حسب الشعبية</string>
+    <string name="sort_enum_comment">حسب التعليقات</string>
+    <string name="sort_enum_rating">حسب التقييم</string>
 
     <string name="type">النوع</string>
 
@@ -63,4 +64,5 @@
     <string name="send">إرسال</string>
 
     <string name="the_list_is_empty">القائمة فارغة :(</string>
+    <string name="retry">إعادة المحاولة</string>
 </resources>

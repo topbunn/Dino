@@ -1,5 +1,6 @@
 package ru.topbun.detail_mod
 
+import android.R.attr.contentDescription
 import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,7 +42,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import coil3.compose.AsyncImage
 import kotlinx.parcelize.Parcelize
+import org.jetbrains.annotations.Async
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.R
@@ -155,7 +158,7 @@ private fun SupportVersions(state: DetailModState) {
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            state.mod.supportVersion.forEach { version ->
+            state.mod.versions.forEach { version ->
                 SupportVersionItem(
                     value = version,
                 )
@@ -181,8 +184,8 @@ private fun SupportVersionItem(value: String, actualVersion: Boolean = false) {
 @Composable
 private fun Metrics(mod: ModEntity) {
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        IconWithButton(mod.countDownload.toString(), R.drawable.ic_download)
-        IconWithButton(mod.countFavorite.toString(), R.drawable.ic_favorite)
+        IconWithButton(mod.rating.toString(), R.drawable.ic_star)
+        IconWithButton(mod.commentCounts.toString(), R.drawable.ic_comment)
     }
 }
 
@@ -203,15 +206,31 @@ private fun TitleWithDescr(mod: ModEntity) {
         color = Colors.GRAY,
         fontFamily = Fonts.SF.MEDIUM,
     )
+    Spacer(Modifier.height(10.dp))
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ){
+        mod.descriptionImages.forEach {
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp)),
+                model = it,
+                contentDescription = null,
+                contentScale = ContentScale.FillWidth
+            )
+        }
+    }
 }
 
 @Composable
 private fun Preview(mod: ModEntity) {
-    Image(
+    AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp)),
-        painter = painterResource(getImageWithNameFile(mod.previewRes)),
+        model = mod.image,
         contentDescription = mod.title,
         contentScale = ContentScale.FillWidth
     )

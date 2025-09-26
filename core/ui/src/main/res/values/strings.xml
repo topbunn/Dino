@@ -7,9 +7,10 @@
 
     <string name="search">Search</string>
 
-    <string name="sort_enum_best">Best</string>
-    <string name="sort_enum_new">New</string>
-    <string name="sort_enum_all">All</string>
+    <string name="sort_enum_name">By name</string>
+    <string name="sort_enum_best">By popularity</string>
+    <string name="sort_enum_comment">By comments</string>
+    <string name="sort_enum_rating">By rating</string>
 
     <string name="type">Type</string>
 
@@ -62,4 +63,5 @@
     <string name="send">Send</string>
 
     <string name="the_list_is_empty">The list is empty :(</string>
+    <string name="retry">Retry</string>
 </resources>

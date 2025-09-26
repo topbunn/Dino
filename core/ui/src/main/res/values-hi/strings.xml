@@ -8,9 +8,10 @@
 
     <string name="search">खोजें</string>
 
-    <string name="sort_enum_best">सर्वश्रेष्ठ</string>
-    <string name="sort_enum_new">नए</string>
-    <string name="sort_enum_all">सभी</string>
+    <string name="sort_enum_name">नाम से</string>
+    <string name="sort_enum_best">लोकप्रियता के आधार पर</string>
+    <string name="sort_enum_comment">टिप्पणियों के आधार पर</string>
+    <string name="sort_enum_rating">रेटिंग के आधार पर</string>
 
     <string name="type">प्रकार</string>
 
@@ -63,4 +64,5 @@
     <string name="describe_your_problem">अपनी समस्या बताएं</string>
     <string name="send">भेजें</string>
     <string name="the_list_is_empty">सूची खाली है :(</string>
+    <string name="retry">पुनः प्रयास करें</string>
 </resources>

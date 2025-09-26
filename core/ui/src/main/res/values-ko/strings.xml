@@ -8,9 +8,10 @@
 
     <string name="search">검색</string>
 
-    <string name="sort_enum_best">인기</string>
-    <string name="sort_enum_new">최신</string>
-    <string name="sort_enum_all">전체</string>
+    <string name="sort_enum_name">이름순</string>
+    <string name="sort_enum_best">인기순</string>
+    <string name="sort_enum_comment">댓글순</string>
+    <string name="sort_enum_rating">평점순</string>
 
     <string name="type">종류</string>
 
@@ -62,4 +63,5 @@
     <string name="describe_your_problem">문제를 설명하세요</string>
     <string name="send">보내기</string>
     <string name="the_list_is_empty">목록은 비어 있습니다 :(</string>
+    <string name="retry">다시 시도</string>
 </resources>

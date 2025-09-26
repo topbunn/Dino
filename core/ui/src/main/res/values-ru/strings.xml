@@ -7,9 +7,10 @@
 
     <string name="search">Поиск</string>
 
-    <string name="sort_enum_best">Лучшие</string>
-    <string name="sort_enum_new">Новые</string>
-    <string name="sort_enum_all">Все</string>
+    <string name="sort_enum_name">По имени</string>
+    <string name="sort_enum_best">По популярности</string>
+    <string name="sort_enum_comment">По комментариям</string>
+    <string name="sort_enum_rating">По рейтингу</string>
 
     <string name="type">Тип</string>
 
@@ -61,4 +62,5 @@
     <string name="describe_your_problem">Опишите вашу проблему</string>
     <string name="send">Отправить</string>
     <string name="the_list_is_empty">Список пуст :(</string>
+    <string name="retry">Повторить</string>
 </resources>

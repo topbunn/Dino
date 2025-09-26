@@ -39,6 +39,8 @@ android {
 
 dependencies {
 
+    implementation(libs.coil.network)
+    implementation(libs.coil.compose)
     implementation(libs.app.update.ktx)
     implementation(libs.review)
     implementation(libs.voyager.tab)

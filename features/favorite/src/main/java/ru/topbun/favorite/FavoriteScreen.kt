@@ -1,15 +1,19 @@
 package ru.topbun.favorite
 
+import android.widget.Toast
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -29,14 +34,17 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import ru.topbun.favorite.FavoriteState.FavoriteScreenState.Error
+import ru.topbun.favorite.FavoriteState.FavoriteScreenState.Loading
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.R
-import ru.topbun.ui.theme.Colors
-import ru.topbun.ui.theme.Fonts
-import ru.topbun.ui.theme.Typography
+import ru.topbun.ui.components.AppButton
 import ru.topbun.ui.components.InterstitialAd
 import ru.topbun.ui.components.ModItem
 import ru.topbun.ui.components.NativeAd
+import ru.topbun.ui.theme.Colors
+import ru.topbun.ui.theme.Fonts
+import ru.topbun.ui.theme.Typography
 
 object FavoriteScreen : Tab, Screen {
 
@@ -51,10 +59,17 @@ object FavoriteScreen : Tab, Screen {
                 .fillMaxSize()
                 .background(Colors.BLACK_BG)
         ) {
+            val context = LocalContext.current
             val activity = LocalActivity.currentOrThrow
             val parentNavigator = LocalNavigator.currentOrThrow.parent
             val viewModel = viewModel<FavoriteViewModel>()
             val state by viewModel.state.collectAsState()
+
+            LaunchedEffect(state.favoriteScreenState) {
+                if(state.favoriteScreenState is Error){
+                    Toast.makeText(context, (state.favoriteScreenState as Error).message, Toast.LENGTH_SHORT).show()
+                }
+            }
 
             LazyColumn(
                 modifier = Modifier
@@ -64,35 +79,55 @@ object FavoriteScreen : Tab, Screen {
                 contentPadding = PaddingValues(vertical = 10.dp, horizontal = 20.dp)
             ) {
                 item { Header(state) }
-                if (state.mods.isNotEmpty()){
-                    state.mods.forEachIndexed { index, mod ->
-                        item{
-                            ModItem(
-                                mod = mod,
-                                onClickFavorite = { viewModel.removeFavorite(mod) },
-                                onClickMod = {
-                                    viewModel.changeOpenMod(mod)
-                                }
-                            )
-                        }
-                        if (index != 0 && ((index + 1) % 2 == 0)){
-                            item { NativeAd(activity.applicationContext) }
-                        }
-                        if (state.mods.size == 1){
-                            item { NativeAd(activity.applicationContext) }
+                when{
+                    state.mods.isNotEmpty() -> {
+                        state.mods.forEachIndexed { index, mod ->
+                            item{
+                                ModItem(
+                                    mod = mod,
+                                    onClickFavorite = { viewModel.removeFavorite(mod) },
+                                    onClickMod = {
+                                        viewModel.openMod(mod)
+                                    }
+                                )
+                            }
+                            if (index != 0 && ((index + 1) % 2 == 0)){
+                                item { NativeAd(activity.applicationContext) }
+                            }
+                            if (state.mods.size == 1){
+                                item { NativeAd(activity.applicationContext) }
+                            }
                         }
                     }
-                } else {
-                    item {
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = "The list is empty :(",
-                            style = Typography.APP_TEXT,
-                            fontSize = 18.sp,
-                            color = Colors.GRAY,
-                            textAlign = TextAlign.Center,
-                            fontFamily = Fonts.SF.BOLD,
-                        )
+                    state.favoriteScreenState is Loading -> {
+                        item {
+                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+                                CircularProgressIndicator(color = Colors.WHITE, strokeWidth = 2.5.dp, modifier = Modifier.size(20.dp))
+                            }
+                        }
+                    }
+                    state.favoriteScreenState is Error -> {
+                        item {
+                            AppButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = stringResource(R.string.retry)
+                            ) { viewModel.loadMods() }
+                        }
+                    }
+                    else -> {
+                        if (state.favoriteScreenState !is Error){
+                            item {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = "The list is empty :(",
+                                    style = Typography.APP_TEXT,
+                                    fontSize = 18.sp,
+                                    color = Colors.GRAY,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = Fonts.SF.BOLD,
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -100,7 +135,7 @@ object FavoriteScreen : Tab, Screen {
                 val detailScreen = rememberScreen(SharedScreen.DetailModScreen(it))
                 InterstitialAd(activity) {
                     parentNavigator?.push(detailScreen)
-                    viewModel.changeOpenMod(null)
+                    viewModel.openMod(null)
                 }
             }
             LaunchedEffect(this) {

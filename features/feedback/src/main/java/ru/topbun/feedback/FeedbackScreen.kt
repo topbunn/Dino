@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import ru.topbun.feedback.FeedbackState.FeedbackScreenState
 import ru.topbun.ui.R
 import ru.topbun.ui.components.AppButton
 import ru.topbun.ui.components.AppTextField
@@ -67,10 +68,10 @@ object FeedbackScreen: Tab, Screen {
 
             LaunchedEffect(state.feedbackState) {
                 when(val feedbackState = state.feedbackState){
-                     is FeedbackState.FeedbackScreenState.Error -> {
+                     is FeedbackScreenState.Error -> {
                         Toast.makeText(context, feedbackState.message, Toast.LENGTH_SHORT).show()
                     }
-                    FeedbackState.FeedbackScreenState.Success -> {
+                    FeedbackScreenState.Success -> {
                         Toast.makeText(context, messageSent, Toast.LENGTH_SHORT).show()
                     }
                     else -> {}
@@ -120,6 +121,7 @@ object FeedbackScreen: Tab, Screen {
                     .fillMaxWidth()
                     .height(48.dp),
                 enabled = buttonEnabled,
+                loading = state.feedbackState is FeedbackScreenState.Loading,
                 text = stringResource(R.string.send)
             ) {
                 viewModel.sendIssue()

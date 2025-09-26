@@ -1,5 +1,7 @@
 package ru.topbun.ui.components
 
+import android.R.attr.contentDescription
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.ui.theme.Colors
 import ru.topbun.ui.theme.Fonts
@@ -38,13 +42,18 @@ fun ModItem(mod: ModEntity, onClickFavorite: () -> Unit, onClickMod: () -> Unit)
             .clickable { onClickMod() }
             .padding(10.dp),
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(6.dp)),
-            painter = painterResource(getImageWithNameFile(mod.previewRes)),
+            model = mod.image,
             contentDescription = "image mod",
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillWidth,
+            onState = {
+                if (it is AsyncImagePainter.State.Error){
+                    Log.e("Error Async Image", it.result.throwable.message ?: "Неизвестно")
+                }
+            }
         )
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -76,8 +85,8 @@ fun ModItem(mod: ModEntity, onClickFavorite: () -> Unit, onClickMod: () -> Unit)
         )
         Spacer(Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            IconWithButton(mod.countDownload.toString(), R.drawable.ic_download)
-            IconWithButton(mod.countFavorite.toString(), R.drawable.ic_favorite)
+            IconWithButton(mod.rating.toString(), R.drawable.ic_star)
+            IconWithButton(mod.commentCounts.toString(), R.drawable.ic_comment)
         }
 
     }

@@ -31,7 +31,7 @@ class FeedbackViewModel(application: Application) : AndroidViewModel(application
         val issue = IssueEntity(email = state.value.email, text = state.value.message)
         val result = repository.sendIssue(issue)
         result.onSuccess {
-            _state.update { it.copy(feedbackState = FeedbackState.FeedbackScreenState.Success) }
+            _state.update { it.copy(feedbackState = FeedbackState.FeedbackScreenState.Success, email = "", message = "") }
         }.onFailure {
             _state.update { it.copy(feedbackState = FeedbackState.FeedbackScreenState.Error(it.message)) }
         }

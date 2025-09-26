@@ -7,8 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.database.entity.FavoriteEntity
 import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.ModEntity
+import ru.topbun.favorite.FavoriteState.FavoriteScreenState
 
 class FavoriteViewModel(application: Application): AndroidViewModel(application) {
 
@@ -18,18 +20,31 @@ class FavoriteViewModel(application: Application): AndroidViewModel(application)
     val state = _state.asStateFlow()
 
     fun removeFavorite(mod: ModEntity) = viewModelScope.launch{
-        val favorite = repository.getFavoriteWithModId(mod.id) ?: FavoriteEntity(modId = mod.id, status = false)
-        val newFavorite = favorite.copy(status = false)
-        repository.addFavorite(newFavorite)
-        val newMods = _state.value.mods.filter { it.id != mod.id }
-        _state.update { it.copy(mods = newMods) }
+        val favorite = FavoriteEntity(modId = mod.id, status = false)
+        repository.addFavorite(favorite)
+        _state.update {
+            val newMods = it.mods.toMutableList()
+            newMods.removeIf { it.id == mod.id }
+            it.copy(mods = newMods)
+        }
     }
 
-    fun changeOpenMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
+    fun openMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
 
     fun loadMods() = viewModelScope.launch{
-        val mods = repository.getMods().filter { it.isFavorite }
-        _state.update { it.copy(mods = mods) }
+        _state.update { it.copy(favoriteScreenState = FavoriteScreenState.Loading) }
+        val result = repository.getFavoriteMods()
+        result.onSuccess { mods ->
+            _state.update {
+                it.copy(
+                    mods = _state.value.mods + mods,
+                    favoriteScreenState = FavoriteScreenState.Success
+                )
+            }
+        }.onFailure { error ->
+            _state.update { it.copy(favoriteScreenState = FavoriteScreenState.Error(error.message ?: "Loading error")) }
+        }
+
     }
 
     init {

@@ -8,9 +8,10 @@
 
     <string name="search">検索</string>
 
-    <string name="sort_enum_best">ベスト</string>
-    <string name="sort_enum_new">新着</string>
-    <string name="sort_enum_all">すべて</string>
+    <string name="sort_enum_name">名前順</string>
+    <string name="sort_enum_best">人気順</string>
+    <string name="sort_enum_comment">コメント順</string>
+    <string name="sort_enum_rating">評価順</string>
 
     <string name="type">タイプ</string>
 
@@ -63,4 +64,5 @@
     <string name="describe_your_problem">問題を説明してください</string>
     <string name="send">送信</string>
     <string name="the_list_is_empty">リストは空です:(</string>
+    <string name="retry">再試行</string>
 </resources>

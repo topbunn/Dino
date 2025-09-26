@@ -20,13 +20,14 @@ interface ApiService {
 
     @GET("/v1/apps/{appId}/mod/{status}")
     suspend fun getMods(
+
+        @Path("appId") appId: Int = BuildConfig.APP_ID,
+        @Path("status") status: String = "actived",
         @Query("q") q: String,
         @Query("category") category: ModType?,
         @Query("sort_key") sortKey: ModSortType,
         @Query("skip") skip: Int,
-        @Query("take") take: Int = 10,
-        @Path("appId") appId: Int = BuildConfig.APP_ID,
-        @Path("status") status: String = "actived"
+        @Query("take") take: Int = 100,
     ): GetModsResponse
 
     @GET("/v1/mod/{id}")

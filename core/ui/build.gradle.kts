@@ -67,7 +67,8 @@ dependencies {
     implementation(libs.voyager.tab)
     implementation(libs.voyager.transitions)
 
-
+    implementation(libs.coil.network)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.lifecycle.process.v241)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

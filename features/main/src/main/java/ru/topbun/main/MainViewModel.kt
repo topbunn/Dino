@@ -10,12 +10,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.topbun.data.database.entity.FavoriteEntity
 import ru.topbun.data.repository.ModRepository
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.domain.entity.ModType
-import ru.topbun.main.ModSortEnum.ALL
-import ru.topbun.main.ModSortEnum.BEST
-import ru.topbun.main.ModSortEnum.NEW
+import ru.topbun.main.MainState.MainScreenState
 import kotlin.collections.filter
 import kotlin.collections.map
 
@@ -26,36 +25,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
     private val _state = MutableStateFlow(MainState())
     val state = _state.asStateFlow()
 
-    val mods = _state.map {
-        val modSort = it.modSorts[it.modSortSelectedIndex]
-        val sortType = state.value.selectedSortType
-        it.mods.filter {
-            it.title.contains(state.value.search)
-        }.sortedByDescending {
-            when(modSort){
-                BEST -> it.countDownload
-                NEW -> it.id
-                ALL -> it.title.first().code
-            }
-        }.filter {
-            when(sortType){
-                SortType.ALL -> true
-                SortType.ADDON -> it.type.contains(ModType.ADDON)
-                SortType.MAPS -> it.type.contains(ModType.WORLD)
-                SortType.TEXTURE -> it.type.contains(ModType.TEXTURE_PACK)
-                SortType.SKINS -> it.type.contains(ModType.SKIN_PACK)
-            }
-        }
-    }.stateIn(viewModelScope, SharingStarted.Lazily, state.value.mods)
-
     fun changeOpenMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
 
     fun changeFavorite(mod: ModEntity) = viewModelScope.launch{
-        val favorite = repository.getFavoriteWithModId(mod.id) ?: FavoriteEntity(modId = mod.id, status = false)
-        val newFavorite = favorite.copy(status = !favorite.status)
-        repository.addFavorite(newFavorite)
+        val favorite = FavoriteEntity(
+            modId = mod.id,
+            status = !mod.isFavorite
+        )
+        repository.addFavorite(favorite)
         val newMods = _state.value.mods.map {
-            if (it.id == favorite.modId){ it.copy(isFavorite = newFavorite.status, countFavorite = if (newFavorite.status) it.countFavorite + 1 else it.countFavorite - 1) } else { it }
+            if (it.id == favorite.modId) it.copy(isFavorite = favorite.status) else it
         }
         _state.update {
             it.copy(mods = newMods)
@@ -64,11 +43,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
 
     fun changeSearch(value: String) = _state.update { it.copy(search = value) }
     fun changeModSort(selectedIndex: Int) = _state.update { it.copy(modSortSelectedIndex = selectedIndex) }
-    fun changeSortType(sortType: SortType) = _state.update { it.copy(selectedSortType = sortType) }
+    fun changeSortType(modTypeUi: ModTypeUi) = _state.update { it.copy(selectedModTypeUi = modTypeUi) }
 
     fun loadMods() = viewModelScope.launch{
-        val mods = repository.getMods()
-        _state.update { it.copy(mods = mods) }
+        _state.update { it.copy(mainScreenState = MainScreenState.Loading) }
+        val result = repository.getMods(
+            q = _state.value.search,
+            offset = _state.value.mods.size,
+            type = _state.value.selectedModTypeUi.toModSortType(),
+            sortType = _state.value.modSorts[state.value.modSortSelectedIndex].toModSortType()
+        )
+        result.onSuccess { mods ->
+            _state.update { it.copy(mods = it.mods + mods, mainScreenState = MainScreenState.Success) }
+        }.onFailure { error ->
+            error.printStackTrace()
+            _state.update { it.copy(mainScreenState = MainScreenState.Error(error.message ?: "Loading error")) }
+        }
     }
 
 }
