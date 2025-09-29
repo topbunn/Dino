@@ -32,6 +32,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import ru.topbun.main.MainState.MainScreenState.Error
+import ru.topbun.main.MainState.MainScreenState.Loading
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.R
 import ru.topbun.ui.theme.Colors
@@ -60,6 +61,10 @@ object MainScreen: Tab, Screen {
             val viewModel = viewModel<MainViewModel>()
             val state by viewModel.state.collectAsState()
 
+            LaunchedEffect(this) {
+                viewModel.loadMods()
+            }
+
             LaunchedEffect(state.mainScreenState) {
                 if(state.mainScreenState is Error){
                     Toast.makeText(activity.applicationContext, (state.mainScreenState as Error).message, Toast.LENGTH_SHORT).show()
@@ -78,6 +83,7 @@ object MainScreen: Tab, Screen {
             ModsList(
                 mods = state.mods,
                 isError = state.mainScreenState is Error,
+                isLoading = state.mainScreenState is Loading,
                 onClickRetryLoad = { viewModel.loadMods() },
                 onClickFavorite = { viewModel.changeFavorite(it) },
                 onClickMod = {
@@ -90,9 +96,6 @@ object MainScreen: Tab, Screen {
                     parentNavigator?.push(detailScreen)
                     viewModel.changeOpenMod(null)
                 }
-            }
-            LaunchedEffect(this) {
-                viewModel.loadMods()
             }
         }
     }

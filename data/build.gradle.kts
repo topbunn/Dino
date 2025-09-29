@@ -52,8 +52,9 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.gson)
-    implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
 
     // Room
     implementation(libs.androidx.room.runtime)

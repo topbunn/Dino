@@ -65,4 +65,7 @@
     <string name="send">送信</string>
     <string name="the_list_is_empty">リストは空です:(</string>
     <string name="retry">再試行</string>
+
+    <string name="collapse">折りたたむ</string>
+    <string name="expand">展開する</string>
 </resources>

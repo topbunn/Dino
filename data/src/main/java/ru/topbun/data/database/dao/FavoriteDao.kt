@@ -9,7 +9,7 @@ import ru.topbun.data.database.entity.FavoriteEntity
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM favorites")
+    @Query("SELECT * FROM favorites WHERE status = 1")
     suspend fun getFavorites(): List<FavoriteEntity>
 
     @Query("SELECT * FROM favorites WHERE modId=:modId LIMIT 1")

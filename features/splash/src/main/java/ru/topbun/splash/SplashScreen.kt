@@ -55,7 +55,6 @@ object SplashScreen: Screen {
         ) {
             val context = LocalContext.current
             val applicationName = context.applicationInfo.labelRes
-            val applicationImage = context.applicationInfo.icon
             Text(
                 text = stringResource(applicationName),
                 style = Typography.APP_TEXT,
@@ -66,7 +65,7 @@ object SplashScreen: Screen {
             Spacer(Modifier.Companion.height(30.dp))
             Image(
                 modifier = Modifier.Companion.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
-                painter = rememberAsyncImagePainter(applicationImage),
+                painter = painterResource(ru.topbun.ui.R.drawable.logo),
                 contentDescription = "Image preview",
                 contentScale = ContentScale.Companion.FillWidth
             )

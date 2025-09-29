@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -20,6 +21,8 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +49,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import coil3.compose.AsyncImage
 import kotlinx.parcelize.Parcelize
 import org.jetbrains.annotations.Async
+import ru.topbun.android.utills.getModNameFromUrl
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.navigation.SharedScreen
 import ru.topbun.ui.R
@@ -52,6 +57,7 @@ import ru.topbun.ui.components.AppButton
 import ru.topbun.ui.components.IconWithButton
 import ru.topbun.ui.components.NativeAd
 import ru.topbun.ui.components.noRippleClickable
+import ru.topbun.ui.components.rippleClickable
 import ru.topbun.ui.theme.Colors
 import ru.topbun.ui.theme.Fonts
 import ru.topbun.ui.theme.Typography
@@ -87,7 +93,7 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
                 Spacer(Modifier.height(10.dp))
                 Preview(state.mod)
                 Spacer(Modifier.height(20.dp))
-                TitleWithDescr(state.mod)
+                TitleWithDescr(viewModel, state)
                 Spacer(Modifier.height(10.dp))
                 Metrics(state.mod)
                 Spacer(Modifier.height(20.dp))
@@ -99,7 +105,7 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
             }
         }
         state.choiceFilePathSetup?.let {
-            SetupModDialog(it, viewModel) {
+            SetupModDialog(it.getModNameFromUrl(), viewModel) {
                 viewModel.changeStageSetupMod(null)
             }
         }
@@ -121,7 +127,7 @@ private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
-                text = it,
+                text = it.getModNameFromUrl(),
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.primary.copy(0.4f),
             ) {
@@ -190,7 +196,8 @@ private fun Metrics(mod: ModEntity) {
 }
 
 @Composable
-private fun TitleWithDescr(mod: ModEntity) {
+private fun TitleWithDescr(viewModel: DetailModViewModel, state: DetailModState) {
+    val mod = state.mod
     Text(
         text = mod.title,
         style = Typography.APP_TEXT,
@@ -211,7 +218,8 @@ private fun TitleWithDescr(mod: ModEntity) {
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ){
-        mod.descriptionImages.forEach {
+        val countTake = if (state.descriptionImageExpand) Int.MAX_VALUE else 3
+        mod.descriptionImages.take(countTake).forEach {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -220,6 +228,31 @@ private fun TitleWithDescr(mod: ModEntity) {
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
+        }
+    }
+    Spacer(Modifier.height(10.dp))
+    if (mod.descriptionImages.count() > 5){
+        Box(Modifier.fillMaxWidth(), Alignment.CenterEnd){
+            Row(
+                modifier = Modifier
+                    .rippleClickable(){viewModel.switchDescriptionImageExpand()}
+                    .padding(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ){
+                Text(
+                    text = stringResource(if(state.descriptionImageExpand) R.string.collapse else R.string.expand),
+                    style = Typography.APP_TEXT,
+                    fontSize = 15.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontFamily = Fonts.SF.BOLD,
+                )
+                Icon(
+                    modifier = Modifier.rotate(if (state.descriptionImageExpand) 180f else 0f),
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Choice type",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     }
 }

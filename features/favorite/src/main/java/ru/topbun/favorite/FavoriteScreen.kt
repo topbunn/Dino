@@ -115,7 +115,7 @@ object FavoriteScreen : Tab, Screen {
                         }
                     }
                     else -> {
-                        if (state.favoriteScreenState !is Error){
+                        if (state.favoriteScreenState !is Error && state.favoriteScreenState !is Loading){
                             item {
                                 Text(
                                     modifier = Modifier.fillMaxWidth(),

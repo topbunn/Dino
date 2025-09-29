@@ -63,4 +63,7 @@
     <string name="send">Отправить</string>
     <string name="the_list_is_empty">Список пуст :(</string>
     <string name="retry">Повторить</string>
+
+    <string name="collapse">Свернуть</string>
+    <string name="expand">Развернуть</string>
 </resources>

@@ -11,6 +11,10 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+        val percentShowAd = property("percent_show_ad")?.toString() ?: error("Not found percentShowAd in properties")
+        buildConfigField("Integer", "PERCENT_SHOW_AD", percentShowAd)
     }
 
     buildTypes {
@@ -28,6 +32,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures{
+        buildConfig = true
     }
 
 }

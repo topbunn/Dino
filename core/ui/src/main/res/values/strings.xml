@@ -64,4 +64,7 @@
 
     <string name="the_list_is_empty">The list is empty :(</string>
     <string name="retry">Retry</string>
+
+    <string name="collapse">Collapse</string>
+    <string name="expand">Expand</string>
 </resources>

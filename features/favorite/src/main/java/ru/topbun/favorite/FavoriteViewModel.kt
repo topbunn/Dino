@@ -32,7 +32,7 @@ class FavoriteViewModel(application: Application): AndroidViewModel(application)
     fun openMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
 
     fun loadMods() = viewModelScope.launch{
-        _state.update { it.copy(favoriteScreenState = FavoriteScreenState.Loading) }
+        _state.update { it.copy(favoriteScreenState = FavoriteScreenState.Loading, mods = emptyList()) }
         val result = repository.getFavoriteMods()
         result.onSuccess { mods ->
             _state.update {
@@ -45,10 +45,6 @@ class FavoriteViewModel(application: Application): AndroidViewModel(application)
             _state.update { it.copy(favoriteScreenState = FavoriteScreenState.Error(error.message ?: "Loading error")) }
         }
 
-    }
-
-    init {
-        loadMods()
     }
 
 }

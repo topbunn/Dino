@@ -1,6 +1,7 @@
 package ru.topbun.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import ru.topbun.ui.BuildConfig
 
 object Colors {
 
@@ -19,5 +20,5 @@ object Colors {
     val GRAY_BG = Color(0xFF2A2A2A)
     val GREEN_BG = Color(0xFF1A521D)
 
-    val PRIMARY = GREEN
+    val PRIMARY = Color(BuildConfig.PRIMARY_COLOR)
 }

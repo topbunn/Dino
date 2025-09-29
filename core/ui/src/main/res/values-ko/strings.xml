@@ -64,4 +64,7 @@
     <string name="send">보내기</string>
     <string name="the_list_is_empty">목록은 비어 있습니다 :(</string>
     <string name="retry">다시 시도</string>
+
+    <string name="collapse">접기</string>
+    <string name="expand">펼치기</string>
 </resources>

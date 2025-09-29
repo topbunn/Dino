@@ -22,13 +22,13 @@ import kotlinx.coroutines.delay
 import ru.topbun.android.utills.LocationAd.OTHER
 import ru.topbun.android.utills.LocationAd.RU
 import ru.topbun.android.utills.getLocation
+import ru.topbun.android.utills.isShowAd
 import ru.topbun.ui.BuildConfig
 import kotlin.random.Random
 
 @Composable
 fun InterstitialAd(activity: Activity, onAdLoaded: () -> Unit = {}) {
-    val isShowAd = Random.nextInt(0, 10) in (0..6)
-    if(isShowAd){
+    if(isShowAd()){
         val location = activity.applicationContext.getLocation()
         when(location){
             RU -> AppInterstitialAd.Yandex(activity, onAdLoaded)

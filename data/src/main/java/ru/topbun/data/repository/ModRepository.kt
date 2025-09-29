@@ -1,10 +1,13 @@
 package ru.topbun.data.repository
 
 import android.content.Context
+import ru.topbun.android.utills.getModNameFromUrl
+import ru.topbun.data.DownloadState
 import ru.topbun.data.api.ApiFactory
 import ru.topbun.data.database.AppDatabase
 import ru.topbun.data.database.entity.FavoriteEntity
 import ru.topbun.data.mappers.ModMapper
+import ru.topbun.data.saveFile
 import ru.topbun.domain.entity.IssueEntity
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.domain.entity.ModSortType
@@ -16,6 +19,10 @@ class ModRepository(context: Context) {
     private val api = ApiFactory.api
     private val modMapper = ModMapper(context)
 
+    suspend fun downloadFile(url: String) = runCatching {
+        api.downloadFile(url).saveFile(url.getModNameFromUrl())
+    }
+
     suspend fun getMods(
         q: String,
         offset: Int,
@@ -26,7 +33,7 @@ class ModRepository(context: Context) {
             q = q,
             skip = offset,
             category = type,
-            sortKey = sortType,
+            sortKey = sortType.toString(),
         )
         modMapper.toEntity(response.mods)
     }
@@ -38,7 +45,7 @@ class ModRepository(context: Context) {
     }
 
     suspend fun getFavoriteMods() = runCatching {
-        val favoriteIds = favoriteDao.getFavorites().filter { it.status }.map { it.modId }
+        val favoriteIds = favoriteDao.getFavorites().map { it.modId }
         val mods = mutableListOf<ModEntity>()
         favoriteIds.forEach {
             try {
@@ -51,7 +58,8 @@ class ModRepository(context: Context) {
 
 
     suspend fun addFavorite(favorite: FavoriteEntity) {
-       favoriteDao.addFavorite(favorite)
+        val oldFavorite = favoriteDao.getFavorite(favorite.modId)
+       favoriteDao.addFavorite(favorite.copy(id = oldFavorite?.id ?: 0))
     }
 
     suspend fun sendIssue(issue: IssueEntity) = runCatching{

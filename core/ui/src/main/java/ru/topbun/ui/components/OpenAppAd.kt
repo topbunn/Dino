@@ -119,7 +119,7 @@ sealed interface OpenAppAd{
 
     class Applovin(private val context: Context): MaxAdListener, OpenAppAd {
 
-        private lateinit var appOpenAd: MaxAppOpenAd
+        private val appOpenAd: MaxAppOpenAd by lazy { MaxAppOpenAd(BuildConfig.APPLOVIN_OPEN_AD_ID) }
         private var isFirstStartAd = true
 
         private val processLifecycleObserver = DefaultProcessLifecycleObserver(
@@ -130,7 +130,6 @@ sealed interface OpenAppAd{
         {
             ProcessLifecycleOwner.get().lifecycle.addObserver(processLifecycleObserver)
 
-            appOpenAd = MaxAppOpenAd(BuildConfig.APPLOVIN_OPEN_AD_ID)
             appOpenAd.setListener(this)
             appOpenAd.loadAd()
         }

@@ -65,4 +65,7 @@
     <string name="send">भेजें</string>
     <string name="the_list_is_empty">सूची खाली है :(</string>
     <string name="retry">पुनः प्रयास करें</string>
+
+    <string name="collapse">संक्षिप्त करें</string>
+    <string name="expand">विस्तार करें</string>
 </resources>

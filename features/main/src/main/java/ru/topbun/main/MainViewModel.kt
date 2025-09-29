@@ -3,10 +3,15 @@ package ru.topbun.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -25,6 +30,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
     private val _state = MutableStateFlow(MainState())
     val state = _state.asStateFlow()
 
+    private var loadModsJob: Job? = null
+
     fun changeOpenMod(mod: ModEntity?) = _state.update { it.copy(openMod = mod) }
 
     fun changeFavorite(mod: ModEntity) = viewModelScope.launch{
@@ -41,24 +48,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
         }
     }
 
-    fun changeSearch(value: String) = _state.update { it.copy(search = value) }
-    fun changeModSort(selectedIndex: Int) = _state.update { it.copy(modSortSelectedIndex = selectedIndex) }
-    fun changeSortType(modTypeUi: ModTypeUi) = _state.update { it.copy(selectedModTypeUi = modTypeUi) }
+    fun changeSearch(value: String) = _state.update { it.copy(search = value) }.also { clearAndLoadMods() }
+    fun changeModSort(selectedIndex: Int) = _state.update { it.copy(modSortSelectedIndex = selectedIndex) }.also { clearAndLoadMods() }
+    fun changeSortType(modTypeUi: ModTypeUi) = _state.update { it.copy(selectedModTypeUi = modTypeUi) }.also { clearAndLoadMods() }
 
-    fun loadMods() = viewModelScope.launch{
-        _state.update { it.copy(mainScreenState = MainScreenState.Loading) }
-        val result = repository.getMods(
-            q = _state.value.search,
-            offset = _state.value.mods.size,
-            type = _state.value.selectedModTypeUi.toModSortType(),
-            sortType = _state.value.modSorts[state.value.modSortSelectedIndex].toModSortType()
-        )
-        result.onSuccess { mods ->
-            _state.update { it.copy(mods = it.mods + mods, mainScreenState = MainScreenState.Success) }
-        }.onFailure { error ->
-            error.printStackTrace()
-            _state.update { it.copy(mainScreenState = MainScreenState.Error(error.message ?: "Loading error")) }
+    private fun clearAndLoadMods(){
+        _state.update { it.copy(mods = emptyList()) }
+        loadMods()
+    }
+
+    fun loadMods(){
+        loadModsJob?.cancel()
+        loadModsJob = viewModelScope.launch{
+            _state.update { it.copy(mainScreenState = MainScreenState.Loading) }
+            val result = repository.getMods(
+                q = _state.value.search,
+                offset = _state.value.mods.size,
+                type = _state.value.selectedModTypeUi.toModSortType(),
+                sortType = _state.value.modSorts[state.value.modSortSelectedIndex].toModSortType()
+            )
+            result.onSuccess { mods ->
+                _state.update { it.copy(mods = it.mods + mods, mainScreenState = MainScreenState.Success) }
+            }.onFailure { error ->
+                error.printStackTrace()
+                _state.update { it.copy(mainScreenState = MainScreenState.Error("Loading error. Check Internet connection")) }
+            }
         }
     }
+
 
 }

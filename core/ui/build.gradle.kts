@@ -13,6 +13,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        val primaryColor = property("primary_color")?.toString() ?: error("Not found primary_color in properties")
+        buildConfigField("Integer", "PRIMARY_COLOR", primaryColor)
 
         val appOpenAdId = property("app_open_ad_id")?.toString() ?: error("Not found appOpenAdId in properties")
         buildConfigField("String", "OPEN_AD_ID", "\"$appOpenAdId\"")
@@ -67,7 +69,9 @@ dependencies {
     implementation(libs.voyager.tab)
     implementation(libs.voyager.transitions)
 
-    implementation(libs.coil.network)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.coil.compose)
     implementation(libs.androidx.lifecycle.process.v241)
     implementation(libs.accompanist.systemuicontroller)

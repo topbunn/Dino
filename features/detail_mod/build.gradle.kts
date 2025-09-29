@@ -39,7 +39,9 @@ android {
 
 dependencies {
 
-    implementation(libs.coil.network)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.coil.compose)
     implementation(libs.app.update.ktx)
     implementation(libs.review)

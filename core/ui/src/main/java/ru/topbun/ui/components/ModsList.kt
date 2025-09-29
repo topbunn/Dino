@@ -75,7 +75,7 @@ fun ColumnScope.ModsList(
                 }
             }
             else -> {
-                if (!isError){
+                if (listOf(isError, isLoading).any{ false }){
                     item {
                         Text(
                             modifier = Modifier.fillMaxWidth(),

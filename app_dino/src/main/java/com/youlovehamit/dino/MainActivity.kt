@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OpenAppAd(this)
-            MaterialTheme(colorScheme.copy(primary = Colors.BLUE)) {
+            MaterialTheme(colorScheme.copy(primary = Colors.PRIMARY)) {
                 App()
             }
         }

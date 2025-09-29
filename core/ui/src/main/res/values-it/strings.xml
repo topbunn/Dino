@@ -65,4 +65,7 @@
     <string name="send">Invia</string>
     <string name="the_list_is_empty">L\'elenco è vuoto :(</string>
     <string name="retry">Riprova</string>
+
+    <string name="collapse">Comprimi</string>
+    <string name="expand">Espandi</string>
 </resources>

@@ -65,4 +65,7 @@
 
     <string name="the_list_is_empty">القائمة فارغة :(</string>
     <string name="retry">إعادة المحاولة</string>
+
+    <string name="collapse">طي</string>
+    <string name="expand">توسيع</string>
 </resources>
