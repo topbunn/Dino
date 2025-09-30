@@ -21,16 +21,34 @@ import ru.topbun.data.database.entity.FavoriteEntity
 import ru.topbun.data.repository.ModRepository
 import ru.topbun.detail_mod.DetailModState.DownloadModState
 import ru.topbun.detail_mod.DetailModState.DownloadModState.Idle
+import ru.topbun.detail_mod.DetailModState.LoadModState.Error
+import ru.topbun.detail_mod.DetailModState.LoadModState.Loading
+import ru.topbun.detail_mod.DetailModState.LoadModState.Success
 import ru.topbun.domain.entity.ModEntity
 import ru.topbun.ui.R
 import java.io.File
 
-class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
+class DetailModViewModel(context: Context, private val modId: Int): ViewModel() {
 
     private val repository = ModRepository(context)
 
-    private val _state = MutableStateFlow(DetailModState(mod))
+    private val _state = MutableStateFlow(DetailModState())
     val state get() = _state.asStateFlow()
+
+    init {
+        loadMod()
+    }
+
+    fun loadMod() = viewModelScope.launch {
+        _state.update { it.copy(loadModState = Loading) }
+        val result = repository.getMod(modId)
+        result.onSuccess { mod ->
+            _state.update { it.copy(mod = mod, loadModState = Success) }
+        }.onFailure {
+            _state.update { it.copy(loadModState = Error("Loading error. Check internet connection")) }
+        }
+
+    }
 
     fun changeStageSetupMod(path: String?) = _state.update {
         it.copy(
@@ -48,19 +66,21 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
     }
 
     fun downloadFile() = viewModelScope.launch(CoroutineExceptionHandler { _, _ -> }){
-        _state.value.choiceFilePathSetup?.let {
-            val result = repository.downloadFile(it)
-            result.onSuccess { downloadFlow ->
-                downloadFlow.collect {
-                    val downloadState = when(val state = it){
-                        is DownloadState.Downloading -> DownloadModState.Loading(state.progress)
-                        is DownloadState.Failed -> DownloadModState.Error("Download error. Check Internet connection")
-                        DownloadState.Finished -> DownloadModState.Success
+        _state.value.mod?.let { mod ->
+            _state.value.choiceFilePathSetup?.let {
+                val result = repository.downloadFile(it, it.getModNameFromUrl(mod.category.toExtension()))
+                result.onSuccess { downloadFlow ->
+                    downloadFlow.collect {
+                        val downloadState = when(val state = it){
+                            is DownloadState.Downloading -> DownloadModState.Loading(state.progress)
+                            is DownloadState.Failed -> DownloadModState.Error("Download error. Check Internet connection")
+                            DownloadState.Finished -> DownloadModState.Success
+                        }
+                        _state.update { it.copy(downloadState = downloadState) }
                     }
-                    _state.update { it.copy(downloadState = downloadState) }
+                }.onFailure { error ->
+                    _state.update { it.copy(downloadState = DownloadModState.Error("Download error. Check Internet connection")) }
                 }
-            }.onFailure { error ->
-                _state.update { it.copy(downloadState = DownloadModState.Error("Download error. Check Internet connection")) }
             }
         }
     }
@@ -99,14 +119,15 @@ class DetailModViewModel(context: Context, mod: ModEntity): ViewModel() {
     }
 
     fun changeFavorite() = viewModelScope.launch{
-        val state = state.value
-        val newFavorite = FavoriteEntity(
-            modId = state.mod.id,
-            status = !state.mod.isFavorite
-        )
-        repository.addFavorite(newFavorite)
-        val newMod = _state.value.mod.copy(isFavorite = newFavorite.status)
-        _state.update { it.copy(mod = newMod) }
+        state.value.mod?.let { mod ->
+            val newFavorite = FavoriteEntity(
+                modId = mod.id,
+                status = !mod.isFavorite
+            )
+            repository.addFavorite(newFavorite)
+            val newMod = mod.copy(isFavorite = newFavorite.status)
+            _state.update { it.copy(mod = newMod) }
+        }
     }
 
 }

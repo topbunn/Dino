@@ -15,4 +15,7 @@ fun getModFile(fileName: String): File? {
 }
 
 
-fun String.getModNameFromUrl() = substringAfterLast('/').replace("%20", " ")
+fun String.getModNameFromUrl(type: String = "") = substringBeforeLast("/?")
+    .substringAfterLast('/')
+    .substringBeforeLast('.')
+    .replace("%20", " ") + type

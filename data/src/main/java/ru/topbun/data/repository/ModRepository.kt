@@ -19,8 +19,8 @@ class ModRepository(context: Context) {
     private val api = ApiFactory.api
     private val modMapper = ModMapper(context)
 
-    suspend fun downloadFile(url: String) = runCatching {
-        api.downloadFile(url).saveFile(url.getModNameFromUrl())
+    suspend fun downloadFile(url: String, filename: String) = runCatching {
+        api.downloadFile(url).saveFile(filename)
     }
 
     suspend fun getMods(

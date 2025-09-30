@@ -74,7 +74,7 @@ class App: Application() {
                 FavoriteScreen
             }
             register<SharedScreen.DetailModScreen> { provider ->
-                DetailModScreen(provider.mod)
+                DetailModScreen(provider.modId)
             }
         }
     }

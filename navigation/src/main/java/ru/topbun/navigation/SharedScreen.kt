@@ -10,5 +10,5 @@ sealed class SharedScreen : ScreenProvider {
     object InstructionScreen : SharedScreen()
     object FeedbackScreen : SharedScreen()
     object FavoriteScreen : SharedScreen()
-    data class DetailModScreen(val mod: ModEntity) : SharedScreen()
+    data class DetailModScreen(val modId: Int) : SharedScreen()
 }

@@ -91,7 +91,7 @@ object MainScreen: Tab, Screen {
                 }
             )
             state.openMod?.let {
-                val detailScreen = rememberScreen(SharedScreen.DetailModScreen(it))
+                val detailScreen = rememberScreen(SharedScreen.DetailModScreen(it.id))
                 InterstitialAd(activity) {
                     parentNavigator?.push(detailScreen)
                     viewModel.changeOpenMod(null)

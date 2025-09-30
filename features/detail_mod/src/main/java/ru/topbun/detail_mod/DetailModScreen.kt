@@ -1,7 +1,9 @@
 package ru.topbun.detail_mod
 
+import android.R.attr.category
 import android.R.attr.contentDescription
 import android.os.Parcelable
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,10 +25,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -64,15 +68,23 @@ import ru.topbun.ui.theme.Typography
 import ru.topbun.ui.utils.getImageWithNameFile
 
 @Parcelize
-data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
+data class DetailModScreen(private val modId: Int) : Screen, Parcelable {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val context = LocalContext.current
 
-        val viewModel = remember { DetailModViewModel(context, mod) }
+        val viewModel = remember { DetailModViewModel(context, modId) }
         val state by viewModel.state.collectAsState()
+
+        val loadModState = state.loadModState
+        LaunchedEffect(loadModState) {
+            if (loadModState is DetailModState.LoadModState.Error){
+                Toast.makeText(context, "Loading error. Check internet connection", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -89,28 +101,50 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 20.dp, vertical = 20.dp)
             ) {
-                ButtonInstruction(navigator)
-                Spacer(Modifier.height(10.dp))
-                Preview(state.mod)
-                Spacer(Modifier.height(20.dp))
-                TitleWithDescr(viewModel, state)
-                Spacer(Modifier.height(10.dp))
-                Metrics(state.mod)
-                Spacer(Modifier.height(20.dp))
-                SupportVersions(state)
-                Spacer(Modifier.height(20.dp))
-                NativeAd(context)
-                Spacer(Modifier.height(20.dp))
-                FileButtons(viewModel, state)
+                state.mod?.let {
+                    ButtonInstruction(navigator)
+                    Spacer(Modifier.height(10.dp))
+                    Preview(it)
+                    Spacer(Modifier.height(20.dp))
+                    TitleWithDescr(viewModel, state)
+                    Spacer(Modifier.height(10.dp))
+                    Metrics(it)
+                    Spacer(Modifier.height(20.dp))
+                    SupportVersions(state)
+                    Spacer(Modifier.height(20.dp))
+                    NativeAd(context)
+                    Spacer(Modifier.height(20.dp))
+                    FileButtons(viewModel, state)
+                }
+                Box(Modifier.fillMaxWidth(), Alignment.Center){
+                    when(loadModState) {
+                        is DetailModState.LoadModState.Error ->  {
+                            AppButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = stringResource(R.string.retry)
+                            ) { viewModel.loadMod() }
+                        }
+                        DetailModState.LoadModState.Loading -> {
+                            CircularProgressIndicator(
+                                color = Colors.WHITE,
+                                strokeWidth = 2.5.dp,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                        else -> {}
+                    }
+                }
             }
         }
-        state.choiceFilePathSetup?.let {
-            SetupModDialog(it.getModNameFromUrl(), viewModel) {
-                viewModel.changeStageSetupMod(null)
+        state.mod?.let { mod ->
+            state.choiceFilePathSetup?.let {
+                SetupModDialog(it.getModNameFromUrl(mod.category.toExtension()), viewModel) {
+                    viewModel.changeStageSetupMod(null)
+                }
             }
-        }
-        if (state.dontWorkAddonDialogIsOpen){
-            DontWorkAddonDialog { viewModel.openDontWorkDialog(false) }
+            if (state.dontWorkAddonDialogIsOpen){
+                DontWorkAddonDialog { viewModel.openDontWorkDialog(false) }
+            }
         }
     }
 
@@ -119,30 +153,32 @@ data class DetailModScreen(private val mod: ModEntity) : Screen, Parcelable {
 
 @Composable
 private fun FileButtons(viewModel: DetailModViewModel, state: DetailModState) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        state.mod.files.forEach {
+    state.mod?.let { mod ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            mod.files.forEach {
+                AppButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    text = it.getModNameFromUrl(mod.category.toExtension()),
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primary.copy(0.4f),
+                ) {
+                    viewModel.changeStageSetupMod(it)
+                }
+            }
             AppButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                text = it.getModNameFromUrl(),
-                contentColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.primary.copy(0.4f),
+                    .height(40.dp),
+                text = stringResource(R.string.addon_don_t_work),
+                contentColor = Colors.WHITE,
+                containerColor = Color(0xffE03131),
             ) {
-                viewModel.changeStageSetupMod(it)
+                viewModel.openDontWorkDialog(true)
             }
-        }
-        AppButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp),
-            text = stringResource(R.string.addon_don_t_work),
-            contentColor = Colors.WHITE,
-            containerColor = Color(0xffE03131),
-        ) {
-            viewModel.openDontWorkDialog(true)
         }
     }
 }
@@ -164,7 +200,7 @@ private fun SupportVersions(state: DetailModState) {
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            state.mod.versions.forEach { version ->
+            state.mod?.versions?.forEach { version ->
                 SupportVersionItem(
                     value = version,
                 )
@@ -177,7 +213,10 @@ private fun SupportVersions(state: DetailModState) {
 private fun SupportVersionItem(value: String, actualVersion: Boolean = false) {
     Text(
         modifier = Modifier
-            .background(if (actualVersion) MaterialTheme.colorScheme.primary else Colors.WHITE, RoundedCornerShape(6.dp))
+            .background(
+                if (actualVersion) MaterialTheme.colorScheme.primary else Colors.WHITE,
+                RoundedCornerShape(6.dp)
+            )
             .padding(horizontal = 10.dp, vertical = 6.dp),
         text = value,
         style = Typography.APP_TEXT,
@@ -197,61 +236,62 @@ private fun Metrics(mod: ModEntity) {
 
 @Composable
 private fun TitleWithDescr(viewModel: DetailModViewModel, state: DetailModState) {
-    val mod = state.mod
-    Text(
-        text = mod.title,
-        style = Typography.APP_TEXT,
-        fontSize = 24.sp,
-        color = Colors.WHITE,
-        fontFamily = Fonts.SF.BOLD,
-    )
-    Spacer(Modifier.height(10.dp))
-    Text(
-        text = mod.description,
-        style = Typography.APP_TEXT,
-        fontSize = 14.sp,
-        color = Colors.GRAY,
-        fontFamily = Fonts.SF.MEDIUM,
-    )
-    Spacer(Modifier.height(10.dp))
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ){
-        val countTake = if (state.descriptionImageExpand) Int.MAX_VALUE else 3
-        mod.descriptionImages.take(countTake).forEach {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp)),
-                model = it,
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth
-            )
+    state.mod?.let { mod ->
+        Text(
+            text = mod.title,
+            style = Typography.APP_TEXT,
+            fontSize = 24.sp,
+            color = Colors.WHITE,
+            fontFamily = Fonts.SF.BOLD,
+        )
+        Spacer(Modifier.height(10.dp))
+        Text(
+            text = mod.description,
+            style = Typography.APP_TEXT,
+            fontSize = 14.sp,
+            color = Colors.GRAY,
+            fontFamily = Fonts.SF.MEDIUM,
+        )
+        Spacer(Modifier.height(10.dp))
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ){
+            val countTake = if (state.descriptionImageExpand) Int.MAX_VALUE else 3
+            mod.descriptionImages.take(countTake).forEach {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp)),
+                    model = it,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth
+                )
+            }
         }
-    }
-    Spacer(Modifier.height(10.dp))
-    if (mod.descriptionImages.count() > 5){
-        Box(Modifier.fillMaxWidth(), Alignment.CenterEnd){
-            Row(
-                modifier = Modifier
-                    .rippleClickable(){viewModel.switchDescriptionImageExpand()}
-                    .padding(6.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ){
-                Text(
-                    text = stringResource(if(state.descriptionImageExpand) R.string.collapse else R.string.expand),
-                    style = Typography.APP_TEXT,
-                    fontSize = 15.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontFamily = Fonts.SF.BOLD,
-                )
-                Icon(
-                    modifier = Modifier.rotate(if (state.descriptionImageExpand) 180f else 0f),
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = "Choice type",
-                    tint = MaterialTheme.colorScheme.primary
-                )
+        Spacer(Modifier.height(10.dp))
+        if (mod.descriptionImages.count() > 5){
+            Box(Modifier.fillMaxWidth(), Alignment.CenterEnd){
+                Row(
+                    modifier = Modifier
+                        .rippleClickable() { viewModel.switchDescriptionImageExpand() }
+                        .padding(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ){
+                    Text(
+                        text = stringResource(if(state.descriptionImageExpand) R.string.collapse else R.string.expand),
+                        style = Typography.APP_TEXT,
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontFamily = Fonts.SF.BOLD,
+                    )
+                    Icon(
+                        modifier = Modifier.rotate(if (state.descriptionImageExpand) 180f else 0f),
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Choice type",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
@@ -308,12 +348,13 @@ private fun Header(viewModel: DetailModViewModel, state: DetailModState) {
             color = Colors.GRAY,
             fontFamily = Fonts.SF.BOLD,
         )
+
         Image(
             modifier = Modifier
                 .size(24.dp)
                 .noRippleClickable { viewModel.changeFavorite() },
             painter = painterResource(
-                if (state.mod.isFavorite) R.drawable.ic_mine_heart_filled else R.drawable.ic_mine_heart_stroke
+                if (state.mod?.isFavorite ?: false) R.drawable.ic_mine_heart_filled else R.drawable.ic_mine_heart_stroke
             ),
             contentDescription = "favorite mods",
         )

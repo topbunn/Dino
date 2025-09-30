@@ -41,5 +41,8 @@ interface ApiService {
     ): GetModsResponse
 
     @GET("/v1/mod/{id}")
-    suspend fun getMod(@Path("id") id: Int): ModDto
+    suspend fun getMod(
+        @Path("id") id: Int,
+        @Header("language") language: String = getDeviceLanguage()
+    ): ModDto
 }

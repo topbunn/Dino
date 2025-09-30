@@ -6,4 +6,11 @@ enum class ModType {
     ADDON,
     TEXTURE_PACK,
     SKIN_PACK;
+
+    fun toExtension(): String = when (this) {
+        ADDON -> ".mcaddon"
+        WORLD -> ".mcworld"
+        TEXTURE_PACK -> ".mcpack"
+        SKIN_PACK -> ".mcpack"
+    }
 }
